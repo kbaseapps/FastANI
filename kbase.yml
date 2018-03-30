@@ -2,7 +2,7 @@ module-name:
     jayrboltonFastANI
 
 module-description:
-    A KBase module
+    FastANI wrapper
 
 service-language:
     python
