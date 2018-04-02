@@ -87,15 +87,13 @@ class FastANITest(unittest.TestCase):
         self.assertTrue(os.path.isfile('/tmp/fastani-out.txt'))
         return
 
-    # NOTE: According to Python unittest naming rules test method names should start from 'test'. # noqa
-    def test_your_method(self):
+    def test_basic(self):
         # Prepare test objects in workspace if needed using
         # self.getWsClient().save_objects({'workspace': self.getWsName(),
         #                                  'objects': []})
         #
-        # Run your method by
-        # ret = self.getImpl().your_method(self.getContext(), parameters...)
-        #
         # Check returned data with
         # self.assertEqual(ret[...], ...) or other unittest methods
+        results = self.getImpl().fast_ani(self.getContext(), {})
+        self.assertTrue(results[0]['percentage_match'], '97.6765')
         pass
