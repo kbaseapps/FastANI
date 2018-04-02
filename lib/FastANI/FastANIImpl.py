@@ -2,7 +2,7 @@
 
 #BEGIN_HEADER
 import os
-# from KBaseReport.KBaseReportClient import KBaseReport TODO
+from KBaseReport.KBaseReportClient import KBaseReport
 import subprocess
 from fast_ani_output import FastANIOutput
 #END_HEADER
@@ -35,8 +35,8 @@ class FastANI:
         '''
         #BEGIN fast_ani
         print('Starting FastANI function and validating parameters.')
-        # if 'workspace_name' not in params:
-        #     raise ValueError('Parameter workspace_name is not set in input arguments')
+        if 'workspace_name' not in params:
+            raise ValueError('Parameter workspace_name is not set in input arguments')
         # if 'assembly_input_ref' not in params:
         #     raise ValueError('Parameter assembly_input_ref is not set in input arguments')
         # Construct the shell command for running FastANI using
@@ -49,14 +49,21 @@ class FastANI:
         # TODO handle the error case
         result_str = subprocess.check_output(args)
         output = FastANIOutput(result_str)
-        # report_obj = {
-        #     'objects_created': [],
-        #     'text_message': "Total percentage match: " + output.percentage_match
-        # }
-        # report = KBaseReport(self.callback_url)
-        # report_info = report.create({'report': report_obj})
-        # results = {'report_name': report_info['name'], 'report_ref': report_info['ref']}
-        results = {'percentage_match': output.percentage_match}
+        report_obj = {
+            'objects_created': [],
+            'text_message': "Total percentage match: " + output.percentage_match
+        }
+        report = KBaseReport(self.callback_url)
+        report_info = report.create({
+            'report': report_obj,
+            'workspace_name': params['workspace_name']
+        })
+        results = {
+            'report_name': report_info['name'],
+            'report_ref': report_info['ref'],
+            'percentage_match': output.percentage_match,
+            'orthologous_matches': output.orthologous_matches,
+            'total_fragments': output.total_fragments
+        }
         #END fast_ani
-        # return [results] TODO make report
         return results

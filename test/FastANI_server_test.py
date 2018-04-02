@@ -88,12 +88,9 @@ class FastANITest(unittest.TestCase):
         return
 
     def test_basic(self):
-        # Prepare test objects in workspace if needed using
-        # self.getWsClient().save_objects({'workspace': self.getWsName(),
-        #                                  'objects': []})
-        #
-        # Check returned data with
-        # self.assertEqual(ret[...], ...) or other unittest methods
-        results = self.getImpl().fast_ani(self.getContext(), {})
-        self.assertTrue(results[0]['percentage_match'], '97.6765')
-        pass
+        # Test the basics
+        results = self.getImpl().fast_ani(self.getContext(), {'workspace_name': self.getWsName()})
+        self.assertEqual(results[0]['percentage_match'], '97.6765')
+        self.assertEqual(results[0]['orthologous_matches'], '1324')
+        self.assertEqual(results[0]['total_fragments'], '1547')
+        return
