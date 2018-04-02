@@ -3,23 +3,24 @@ import unittest
 import os  # noqa: F401
 import json  # noqa: F401
 import time
-import requests
+# import requests
+import subprocess
 
 from os import environ
 try:
     from ConfigParser import ConfigParser  # py2
-except:
+except ImportError:
     from configparser import ConfigParser  # py3
 
 from pprint import pprint  # noqa: F401
 
 from biokbase.workspace.client import Workspace as workspaceService
-from jayrboltonFastANI.jayrboltonFastANIImpl import jayrboltonFastANI
-from jayrboltonFastANI.jayrboltonFastANIServer import MethodContext
-from jayrboltonFastANI.authclient import KBaseAuth as _KBaseAuth
+from FastANI.FastANIImpl import FastANI
+from FastANI.FastANIServer import MethodContext
+from FastANI.authclient import KBaseAuth as _KBaseAuth
 
 
-class jayrboltonFastANITest(unittest.TestCase):
+class FastANITest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -28,7 +29,7 @@ class jayrboltonFastANITest(unittest.TestCase):
         cls.cfg = {}
         config = ConfigParser()
         config.read(config_file)
-        for nameval in config.items('jayrboltonFastANI'):
+        for nameval in config.items('FastANI'):
             cls.cfg[nameval[0]] = nameval[1]
         # Getting username from Auth profile for token
         authServiceUrl = cls.cfg['auth-service-url']
@@ -40,14 +41,14 @@ class jayrboltonFastANITest(unittest.TestCase):
         cls.ctx.update({'token': token,
                         'user_id': user_id,
                         'provenance': [
-                            {'service': 'jayrboltonFastANI',
+                            {'service': 'FastANI',
                              'method': 'please_never_use_it_in_production',
                              'method_params': []
                              }],
                         'authenticated': 1})
         cls.wsURL = cls.cfg['workspace-url']
         cls.wsClient = workspaceService(cls.wsURL)
-        cls.serviceImpl = jayrboltonFastANI(cls.cfg)
+        cls.serviceImpl = FastANI(cls.cfg)
         cls.scratch = cls.cfg['scratch']
         cls.callback_url = os.environ['SDK_CALLBACK_URL']
 
@@ -64,7 +65,7 @@ class jayrboltonFastANITest(unittest.TestCase):
         if hasattr(self.__class__, 'wsName'):
             return self.__class__.wsName
         suffix = int(time.time() * 1000)
-        wsName = "test_jayrboltonFastANI_" + str(suffix)
+        wsName = "test_FastANI_" + str(suffix)
         ret = self.getWsClient().create_workspace({'workspace': wsName})  # noqa
         self.__class__.wsName = wsName
         return wsName
@@ -74,6 +75,17 @@ class jayrboltonFastANITest(unittest.TestCase):
 
     def getContext(self):
         return self.__class__.ctx
+
+    def test_fastani_binary(self):
+        # Run the compiled binary using the given example data
+        args = ["../bin/FastANI/fastANI",
+                "-q", "../bin/FastANI/data/Escherichia_coli_str_K12_MG1655.fna",
+                "-r", "../bin/FastANI/data/Shigella_flexneri_2a_01.fna",
+                "-o", "/tmp/fastani-out.txt"
+                ]
+        subprocess.call(args)
+        self.assertTrue(os.path.isfile('/tmp/fastani-out.txt'))
+        return
 
     # NOTE: According to Python unittest naming rules test method names should start from 'test'. # noqa
     def test_your_method(self):

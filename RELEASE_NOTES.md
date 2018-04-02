@@ -1,4 +1,4 @@
-# jayrboltonFastANI release notes
+# FastANI release notes
 =========================================
 
 0.0.0

@@ -1,7 +1,7 @@
-SERVICE = jayrboltonfastani
-SERVICE_CAPS = jayrboltonFastANI
-SPEC_FILE = jayrboltonFastANI.spec
-URL = https://kbase.us/services/jayrboltonfastani
+SERVICE = fastani
+SERVICE_CAPS = FastANI
+SPEC_FILE = FastANI.spec
+URL = https://kbase.us/services/fastani
 DIR = $(shell pwd)
 LIB_DIR = lib
 SCRIPTS_DIR = scripts
