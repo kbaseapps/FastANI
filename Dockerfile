@@ -21,4 +21,13 @@ RUN make all
 
 ENTRYPOINT [ "./scripts/entrypoint.sh" ]
 
+# Fetch and compile FastANI
+
+RUN mkdir -p bin && \
+    git clone https://github.com/ParBLiSS/FastANI.git bin/FastANI && \
+    cd bin/FastANI && \
+    ./bootstrap.sh && \
+    ./configure && \
+    make
+
 CMD [ ]
