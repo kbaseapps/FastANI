@@ -26,6 +26,7 @@ ENTRYPOINT [ "./scripts/entrypoint.sh" ]
 RUN mkdir -p bin && \
     git clone https://github.com/ParBLiSS/FastANI.git bin/FastANI && \
     cd bin/FastANI && \
+    git checkout tags/v1.0 -b v1.0 && \
     ./bootstrap.sh && \
     ./configure && \
     make
