@@ -5,6 +5,7 @@ import os
 from KBaseReport.KBaseReportClient import KBaseReport
 import subprocess
 from fast_ani_output import FastANIOutput
+from AssemblyUtil.AssemblyUtilClient import AssemblyUtil
 #END_HEADER
 
 
@@ -38,10 +39,15 @@ class FastANI:
         for name in param_names:
             if name not in params:
                 raise ValueError('Parameter ' + name + ' is not set in input arguments')
+        # Download the query genome as fasta
+        assembly_util = AssemblyUtil(self.callback_url)
+        query_file = assembly_util.get_assembly_as_fasta({
+            'ref': params['query_genome_ref']
+        })
         # Construct the shell command for running FastANI
         args = [
             "fastANI",
-            "-q", "../bin/FastANI/data/Escherichia_coli_str_K12_MG1655.fna",
+            "-q", query_file['path'],
             "-r", "../bin/FastANI/data/Shigella_flexneri_2a_01.fna",
             "-o", "/dev/stdout"
         ]

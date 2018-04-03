@@ -19,6 +19,14 @@ from FastANI.FastANIImpl import FastANI
 from FastANI.FastANIServer import MethodContext
 from FastANI.authclient import KBaseAuth as _KBaseAuth
 
+from AssemblyUtil.AssemblyUtilClient import AssemblyUtil
+from shutil import copyfile
+
+
+# Test file data provided by FastANI
+TEST_FILE_1 = '/tmp/fastANI-data/Escherichia_coli_str_K12_MG1655.fna'
+TEST_FILE_2 = '/tmp/fastANI-data/Shigella_flexneri_2a_01.fna'
+
 
 class FastANITest(unittest.TestCase):
 
@@ -76,20 +84,32 @@ class FastANITest(unittest.TestCase):
     def getContext(self):
         return self.__class__.ctx
 
+    def load_fasta_file(self, path, name):
+        assembly_util = AssemblyUtil(self.callback_url)
+        return assembly_util.save_assembly_from_fasta({
+            'file': {'path': path},
+            'workspace_name': self.getWsName(),
+            'assembly_name': name
+        })
+
     def test_fastani_binary(self):
         # Run the compiled binary using the given example data
-        args = ["fastANI",
-                "-q", "../bin/FastANI/data/Escherichia_coli_str_K12_MG1655.fna",
-                "-r", "../bin/FastANI/data/Shigella_flexneri_2a_01.fna",
-                "-o", "/tmp/fastani-out.txt"
-                ]
+        args = [
+            'fastANI',
+            '-q', TEST_FILE_1,
+            '-r', TEST_FILE_2,
+            '-o', '/tmp/fastani-out.txt'
+        ]
         subprocess.call(args)
         self.assertTrue(os.path.isfile('/tmp/fastani-out.txt'))
         return
 
     def test_basic(self):
-        # Test the basics
-        query_genome_ref = 'xyz'
+        # Test a basic call to FastANIImpl.fast_ani using a query and reference genome
+        # Copy the FastANI example data into the scratch dir
+        a_path = self.scratch + '/a.fna'
+        copyfile(TEST_FILE_1, a_path)
+        query_genome_ref = self.load_fasta_file(a_path, 'test_query')
         results = self.getImpl().fast_ani(self.getContext(), {
             'workspace_name': self.getWsName(),
             'query_genome_ref': query_genome_ref

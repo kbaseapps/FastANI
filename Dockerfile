@@ -31,6 +31,8 @@ RUN mkdir -p bin && \
     ./configure && \
     make && \
     # Place fastANI in the PATH for this user
-    ln -s $(readlink -f ./fastANI) /usr/local/bin/fastANI
+    ln -s $(readlink -f ./fastANI) /usr/local/bin/fastANI && \
+    # Copy some sample data to an absolute path for easy testing
+    cp -r data/ /tmp/fastANI-data
 
 CMD [ ]
