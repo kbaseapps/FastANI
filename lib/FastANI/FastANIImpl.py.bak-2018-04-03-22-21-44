@@ -24,7 +24,7 @@ class FastANI:
     ######################################### noqa
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/jayrbolton/kbase-fastANI.git"
-    GIT_COMMIT_HASH = "fc71401c28792e361c2d436c374fc40a5be36bb4"
+    GIT_COMMIT_HASH = "e83a656f22cca0f53b91bd2bc5919bdb0aa09ace"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER

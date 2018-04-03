@@ -23,7 +23,7 @@
         },
         {
             "id": "reference_genome",
-            "optional": false,
+            "optional": true,
             "advanced": false,
             "allow_multiple": false,
             "default_values": [ "" ],
@@ -34,7 +34,7 @@
         },
         {
             "id": "reference_list",
-            "optional": false,
+            "optional": true,
             "advanced": false,
             "allow_multiple": false,
             "default_values": [ "" ],

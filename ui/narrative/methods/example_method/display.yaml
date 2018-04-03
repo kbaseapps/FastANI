@@ -30,11 +30,11 @@ suggestions:
 #
 parameters :
     query_genome:
-        ui-name: Genome to query against
+        ui-name: Query genome
         short-hint: x
         long-hint: x
     reference_genome:
-        ui-name: Genome to reference for comparison
+        ui-name: Reference genome
         short-hint: x
         long-hint: x
     reference_list:
