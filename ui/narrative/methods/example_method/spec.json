@@ -10,6 +10,17 @@
         "output": null
     },
     "parameters": [ 
+        {
+            "id": "query_genome_ref",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ "KBaseGenomeAnnotations.Assembly" ]
+            }
+        }
     ],
     "behavior": {
         "service-mapping": {
@@ -20,6 +31,11 @@
                 {
                     "narrative_system_variable": "workspace",
                     "target_property": "workspace_name"
+                },
+                {
+                    "input_parameter": "query_genome_ref",
+                    "target_property": "query_genome_ref",
+                    "target_type_transform": "resolved-ref"
                 }
             ],
             "output_mapping": [

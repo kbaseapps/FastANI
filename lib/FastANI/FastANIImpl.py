@@ -26,22 +26,21 @@ class FastANI:
         #END_CONSTRUCTOR
 
     def fast_ani(self, ctx, params):
-
         '''
         Run the FastANI utility on a query genome and set of reference genomes to find similarity
         :param ctx: the sdk context object
-        :param params: Currently empty -- TODO
-        :returns: Returns a dict of 'report_name' and 'report_ref'
+        :param params: A dict of parameters
+        :returns: A dict of return values
         '''
         #BEGIN fast_ani
         print('Starting FastANI function and validating parameters.')
-        if 'workspace_name' not in params:
-            raise ValueError('Parameter workspace_name is not set in input arguments')
-        # if 'assembly_input_ref' not in params:
-        #     raise ValueError('Parameter assembly_input_ref is not set in input arguments')
-        # Construct the shell command for running FastANI using
+        param_names = ['workspace_name', 'query_genome_ref']
+        for name in param_names:
+            if name not in params:
+                raise ValueError('Parameter ' + name + ' is not set in input arguments')
+        # Construct the shell command for running FastANI
         args = [
-            "../bin/FastANI/fastANI",
+            "fastANI",
             "-q", "../bin/FastANI/data/Escherichia_coli_str_K12_MG1655.fna",
             "-r", "../bin/FastANI/data/Shigella_flexneri_2a_01.fna",
             "-o", "/dev/stdout"

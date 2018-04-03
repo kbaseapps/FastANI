@@ -3,20 +3,20 @@
  */
 
 module FastANI {
-    /*
-     *  Insert your typespec information here.
-     */
+    /* fast_ani input */
     typedef structure {
         string workspace_name;
-    } Params;
+        string query_genome_ref;
+    } FastANIParams;
 
+    /* fast_ani output */
     typedef structure {
         string report_name;
         string report_ref;
         float percentage_match;
         int total_fragments;
         int orthologous_matches;
-    } Result;
+    } FastANIResults;
 
-    funcdef fast_ani(Params params) returns (Result results) authentication required;
+    funcdef fast_ani(FastANIParams params) returns (FastANIResults results) authentication required;
 };

@@ -78,7 +78,7 @@ class FastANITest(unittest.TestCase):
 
     def test_fastani_binary(self):
         # Run the compiled binary using the given example data
-        args = ["../bin/FastANI/fastANI",
+        args = ["fastANI",
                 "-q", "../bin/FastANI/data/Escherichia_coli_str_K12_MG1655.fna",
                 "-r", "../bin/FastANI/data/Shigella_flexneri_2a_01.fna",
                 "-o", "/tmp/fastani-out.txt"
@@ -89,7 +89,11 @@ class FastANITest(unittest.TestCase):
 
     def test_basic(self):
         # Test the basics
-        results = self.getImpl().fast_ani(self.getContext(), {'workspace_name': self.getWsName()})
+        query_genome_ref = 'xyz'
+        results = self.getImpl().fast_ani(self.getContext(), {
+            'workspace_name': self.getWsName(),
+            'query_genome_ref': query_genome_ref
+        })
         self.assertEqual(results[0]['percentage_match'], '97.6765')
         self.assertEqual(results[0]['orthologous_matches'], '1324')
         self.assertEqual(results[0]['total_fragments'], '1547')
