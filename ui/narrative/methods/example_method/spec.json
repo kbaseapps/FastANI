@@ -1,7 +1,7 @@
 {
     "ver": "0.0.1",
     "authors": [
-        "jayrbolton"
+        "jayrbolton <jrbolton@lbl.gov>"
     ],
     "contact": "",
     "categories": ["active"],
@@ -11,7 +11,7 @@
     },
     "parameters": [ 
         {
-            "id": "query_genome_ref",
+            "id": "query_genome",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -22,7 +22,7 @@
             }
         },
         {
-            "id": "reference_genome_ref",
+            "id": "reference_genome",
             "optional": false,
             "advanced": false,
             "allow_multiple": false,
@@ -30,6 +30,17 @@
             "field_type": "text",
             "text_options": {
                 "valid_ws_types": [ "KBaseGenomeAnnotations.Assembly" ]
+            }
+        },
+        {
+            "id": "reference_list",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ "KBaseSets.AssemblySet" ]
             }
         }
     ],
@@ -44,14 +55,19 @@
                     "target_property": "workspace_name"
                 },
                 {
-                    "input_parameter": "query_genome_ref",
-                    "target_property": "query_genome_ref",
+                    "input_parameter": "query_genome",
+                    "target_property": "query_genome",
                     "target_type_transform": "resolved-ref"
                 },
                 {
-                    "input_parameter": "reference_genome_ref",
-                    "target_property": "reference_genome_ref",
+                    "input_parameter": "reference_genome",
+                    "target_property": "reference_genome",
                     "target_type_transform": "resolved-ref"
+                },
+                {
+                    "input_parameter": "reference_list",
+                    "target_property": "reference_list",
+                    "target_type_transform": "list<resolved-ref>"
                 }
             ],
             "output_mapping": [

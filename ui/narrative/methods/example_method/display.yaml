@@ -29,12 +29,16 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    query_genome_ref:
+    query_genome:
         ui-name: Genome to query against
         short-hint: x
         long-hint: x
-    reference_genome_ref:
+    reference_genome:
         ui-name: Genome to reference for comparison
+        short-hint: x
+        long-hint: x
+    reference_list:
+        ui-name: List of multiple genome references for comparison
         short-hint: x
         long-hint: x
 

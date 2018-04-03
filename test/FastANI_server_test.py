@@ -22,7 +22,6 @@ from FastANI.authclient import KBaseAuth as _KBaseAuth
 from AssemblyUtil.AssemblyUtilClient import AssemblyUtil
 from shutil import copyfile
 
-
 # Test file data provided by FastANI
 TEST_FILE_1 = '/tmp/fastANI-data/Escherichia_coli_str_K12_MG1655.fna'
 TEST_FILE_2 = '/tmp/fastANI-data/Shigella_flexneri_2a_01.fna'
@@ -93,32 +92,47 @@ class FastANITest(unittest.TestCase):
         })
 
     def test_fastani_binary(self):
-        # Run the compiled binary using the given example data
+        '''
+        Run the compiled binary using the given example data
+        '''
+        out_path = '/tmp/fastani-out.txt'
         args = [
             'fastANI',
-            '-q', TEST_FILE_1,
-            '-r', TEST_FILE_2,
-            '-o', '/tmp/fastani-out.txt'
+            '-q', TEST_FILE_2,
+            '-r', TEST_FILE_1,
+            '-o', out_path
         ]
         subprocess.call(args)
-        self.assertTrue(os.path.isfile('/tmp/fastani-out.txt'))
+        self.assertTrue(os.path.isfile(out_path))
         return
 
-    def test_basic(self):
-        # Test a basic call to FastANIImpl.fast_ani using a query and reference genome
-        # Copy the FastANI example data into the scratch dir
+    def test_single_reference(self):
+        '''
+        Test a basic call to FastANIImpl.fast_ani using a query and reference genome
+        Copy the FastANI example data into the scratch dir
+        '''
         a_path = self.scratch + '/a.fna'
         b_path = self.scratch + '/b.fna'
         copyfile(TEST_FILE_1, a_path)
         copyfile(TEST_FILE_2, b_path)
-        query_genome_ref = self.load_fasta_file(a_path, 'test_query')
-        reference_genome_ref = self.load_fasta_file(b_path, 'test_reference')
+        query_genome = self.load_fasta_file(a_path, 'test_query')
+        reference_genome = self.load_fasta_file(b_path, 'test_reference')
         results = self.getImpl().fast_ani(self.getContext(), {
             'workspace_name': self.getWsName(),
-            'query_genome_ref': query_genome_ref,
-            'reference_genome_ref': reference_genome_ref
+            'query_genome': query_genome,
+            'reference_genome': reference_genome
         })
         self.assertEqual(results[0]['percentage_match'], '97.6765')
         self.assertEqual(results[0]['orthologous_matches'], '1324')
         self.assertEqual(results[0]['total_fragments'], '1547')
         return
+
+    def test_assembly_set(self):
+        '''
+        Test multiple references using an AssemblySet
+        '''
+        # a_path = self.scratch + '/a.fna'
+        # copyfile(TEST_FILE_1, a_path)
+        # query_genome = self.load_fasta_file(a_path, 'test_query')
+        # TODO construct an AssemblySet (??)
+        pass

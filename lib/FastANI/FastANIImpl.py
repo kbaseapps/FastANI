@@ -3,8 +3,7 @@
 #BEGIN_HEADER
 import os
 from KBaseReport.KBaseReportClient import KBaseReport
-import subprocess
-from fast_ani_output import FastANIOutput
+from fast_ani_proc import FastANIProc
 from AssemblyUtil.AssemblyUtilClient import AssemblyUtil
 #END_HEADER
 
@@ -35,31 +34,28 @@ class FastANI:
         '''
         #BEGIN fast_ani
         print('Starting FastANI function and validating parameters.')
-        param_names = ['workspace_name', 'query_genome_ref']
-        for name in param_names:
-            if name not in params:
-                raise ValueError('Parameter ' + name + ' is not set in input arguments')
-        # Download the query genome as fasta
+        if 'workspace_name' not in params:
+            raise ValueError('Parameter "workspace_name" is not set in input arguments')
+        if 'reference_genome' not in params and 'reference_list' not in params:
+            raise ValueError('Pass a parameter for either "reference_genome" or "reference_list"')
+        # Download the query genome
         assembly_util = AssemblyUtil(self.callback_url)
         query_file = assembly_util.get_assembly_as_fasta({
-            'ref': params['query_genome_ref']
+            'ref': params['query_genome']
         })
-        reference_file = assembly_util.get_assembly_as_fasta({
-            'ref': params['reference_genome_ref']
-        })
-        # Construct the shell command for running FastANI
-        args = [
-            "fastANI",
-            "-q", query_file['path'],
-            "-r", reference_file['path'],
-            "-o", "/dev/stdout"
-        ]
-        # TODO handle the error case
-        result_str = subprocess.check_output(args)
-        output = FastANIOutput(result_str)
+        # Fetch either a single reference genome or a list of references
+        # In either case, we pass an array of references to FastANIProc
+        if params['reference_genome']:
+            ref = assembly_util.get_assembly_as_fasta({'ref': params['reference_genome']})
+            refs = [ref['path']]
+        else:
+            refs = ['xyz']  # TODO fetch references from AssemblySet (???)
+            pass
+        fast_ani_proc = FastANIProc(query_file['path'])
+        fast_ani_proc.run(refs)
         report_obj = {
             'objects_created': [],
-            'text_message': "Total percentage match: " + output.percentage_match
+            'text_message': 'Total percentage match: ' + fast_ani_proc.percentage_match
         }
         report = KBaseReport(self.callback_url)
         report_info = report.create({
@@ -69,9 +65,9 @@ class FastANI:
         results = {
             'report_name': report_info['name'],
             'report_ref': report_info['ref'],
-            'percentage_match': output.percentage_match,
-            'orthologous_matches': output.orthologous_matches,
-            'total_fragments': output.total_fragments
+            'percentage_match': fast_ani_proc.percentage_match,
+            'orthologous_matches': fast_ani_proc.orthologous_matches,
+            'total_fragments': fast_ani_proc.total_fragments
         }
         #END fast_ani
         return results
