@@ -4,7 +4,7 @@
         "jayrbolton <jrbolton@lbl.gov>"
     ],
     "contact": "",
-    "categories": ["active"],
+    "categories": ["comparative_genomics", "active"],
     "widgets": {
         "input": null,
         "output": null
