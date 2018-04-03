@@ -7,7 +7,7 @@
     "categories": ["comparative_genomics", "active"],
     "widgets": {
         "input": null,
-        "output": null
+        "output": "no-display"
     },
     "parameters": [ 
         {
@@ -72,11 +72,11 @@
             ],
             "output_mapping": [
                                 {
-                    "service_method_output_path": [0,"report_name"],
+                    "service_method_output_path": [0, "report_name"],
                     "target_property": "report_name"
                 },
                 {
-                    "service_method_output_path": [0,"report_ref"],
+                    "service_method_output_path": [0, "report_ref"],
                     "target_property": "report_ref"
                 },
                 {
