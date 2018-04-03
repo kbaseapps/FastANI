@@ -7,6 +7,7 @@ module FastANI {
     typedef structure {
         string workspace_name;
         string query_genome_ref;
+        string reference_genome_ref;
     } FastANIParams;
 
     /* fast_ani output */

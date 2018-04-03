@@ -33,6 +33,10 @@ parameters :
         ui-name: Genome to query against
         short-hint: x
         long-hint: x
+    reference_genome_ref:
+        ui-name: Genome to reference for comparison
+        short-hint: x
+        long-hint: x
 
 description : |
     <p>FastANI is developed for fast alignment-free computation of whole-genome Average Nucleotide Identity (ANI). ANI is defined as mean nucleotide identity of orthologous gene pairs shared between two microbial genomes. FastANI supports pairwise comparison of both complete and draft genome assemblies. Its underlying procedure follows a similar workflow as described by Goris et al. 2007. However, it avoids expensive sequence alignments and uses Mashmap as its MinHash based sequence mapping engine to compute the orthologous mappings and alignment identity estimates. Based on our experiments with complete and draft genomes, its accuracy is on par with BLAST-based ANI solver and it achieves two to three orders of magnitude speedup. Therefore, it is useful for pairwise ANI computation of large number of genome pairs. More details about its speed, accuracy and potential applications are described here: "High-throughput ANI Analysis of 90K Prokaryotic Genomes Reveals Clear Species Boundaries".</p>

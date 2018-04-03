@@ -44,11 +44,14 @@ class FastANI:
         query_file = assembly_util.get_assembly_as_fasta({
             'ref': params['query_genome_ref']
         })
+        reference_file = assembly_util.get_assembly_as_fasta({
+            'ref': params['reference_genome_ref']
+        })
         # Construct the shell command for running FastANI
         args = [
             "fastANI",
             "-q", query_file['path'],
-            "-r", "../bin/FastANI/data/Shigella_flexneri_2a_01.fna",
+            "-r", reference_file['path'],
             "-o", "/dev/stdout"
         ]
         # TODO handle the error case
