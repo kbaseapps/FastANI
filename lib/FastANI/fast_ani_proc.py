@@ -24,7 +24,7 @@ class FastANIProc:
         '''
         self.query_path = query_path
         if not os.path.isfile(query_path):
-            raise ValueError('File path does not exist for query genome: ' + query_path)
+            raise ValueError('File path does not exist for query assembly: ' + query_path)
         return
 
     def run(self, refs):
@@ -52,7 +52,7 @@ class FastANIProc:
         # Check that all paths exist
         for path in ref_paths:
             if not os.path.isfile(path):
-                raise ValueError('File path does not exist for reference genome: ' + path)
+                raise ValueError('File path does not exist for reference assembly: ' + path)
         contents = "\n".join(ref_paths)
         file = tempfile.NamedTemporaryFile(delete=False)
         file.write(contents)

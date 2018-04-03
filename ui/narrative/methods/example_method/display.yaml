@@ -4,7 +4,7 @@
 name: FastANI
 
 tooltip: |
-    FastANI genome comparison
+    FastANI genome assembly comparison
 
 screenshots: []
 
@@ -29,16 +29,16 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    query_genome:
-        ui-name: Query genome
+    query_assembly:
+        ui-name: Assembly to query
         short-hint: x
         long-hint: x
-    reference_genome:
-        ui-name: Reference genome
+    reference_assembly:
+        ui-name: Reference assembly
         short-hint: x
         long-hint: x
     reference_list:
-        ui-name: List of multiple genome references for comparison
+        ui-name: Assembly set
         short-hint: x
         long-hint: x
 

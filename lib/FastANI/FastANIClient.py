@@ -37,8 +37,8 @@ class FastANI(object):
         """
         :param params: instance of type "FastANIParams" (fast_ani input) ->
            structure: parameter "workspace_name" of String, parameter
-           "query_genome" of String, parameter "reference_genome" of String,
-           parameter "reference_list" of list of String
+           "query_assembly" of String, parameter "reference_assembly" of
+           String, parameter "reference_list" of list of String
         :returns: instance of type "FastANIResults" (fast_ani output) ->
            structure: parameter "report_name" of String, parameter
            "report_ref" of String, parameter "percentage_match" of Double,

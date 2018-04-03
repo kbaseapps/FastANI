@@ -123,8 +123,8 @@ $params is a FastANI.FastANIParams
 $results is a FastANI.FastANIResults
 FastANIParams is a reference to a hash where the following keys are defined:
 	workspace_name has a value which is a string
-	query_genome has a value which is a string
-	reference_genome has a value which is a string
+	query_assembly has a value which is a string
+	reference_assembly has a value which is a string
 	reference_list has a value which is a reference to a list where each element is a string
 FastANIResults is a reference to a hash where the following keys are defined:
 	report_name has a value which is a string
@@ -143,8 +143,8 @@ $params is a FastANI.FastANIParams
 $results is a FastANI.FastANIResults
 FastANIParams is a reference to a hash where the following keys are defined:
 	workspace_name has a value which is a string
-	query_genome has a value which is a string
-	reference_genome has a value which is a string
+	query_assembly has a value which is a string
+	reference_assembly has a value which is a string
 	reference_list has a value which is a reference to a list where each element is a string
 FastANIResults is a reference to a hash where the following keys are defined:
 	report_name has a value which is a string
@@ -317,8 +317,8 @@ fast_ani input
 <pre>
 a reference to a hash where the following keys are defined:
 workspace_name has a value which is a string
-query_genome has a value which is a string
-reference_genome has a value which is a string
+query_assembly has a value which is a string
+reference_assembly has a value which is a string
 reference_list has a value which is a reference to a list where each element is a string
 
 </pre>
@@ -329,8 +329,8 @@ reference_list has a value which is a reference to a list where each element is 
 
 a reference to a hash where the following keys are defined:
 workspace_name has a value which is a string
-query_genome has a value which is a string
-reference_genome has a value which is a string
+query_assembly has a value which is a string
+reference_assembly has a value which is a string
 reference_list has a value which is a reference to a list where each element is a string
 
 
