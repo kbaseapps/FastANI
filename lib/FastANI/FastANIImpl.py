@@ -56,11 +56,11 @@ class FastANI:
         # Download the query assemblies
         query_files = fetch_multiple(self.callback_url, params['query_assembly_refs'])
         reference_files = fetch_multiple(self.callback_url, params['reference_assembly_refs'])
-        fast_ani_proc = FastANIProc(query_files, reference_files)
+        fast_ani_proc = FastANIProc(query_files, reference_files, self.shared_folder)
         fast_ani_output = FastANIOutput(fast_ani_proc.raw_output)
         print('Finished running.. Summary:\n' + fast_ani_output.summary)
         report_info = KBaseReport(self.callback_url).create({
-            'report': {'objects_created': [], 'text_message': fast_ani_proc.raw_output},
+            'report': {'objects_created': [], 'text_message': fast_ani_output.summary},
             'workspace_name': params['workspace_name']
         })
         results = {

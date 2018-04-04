@@ -17,23 +17,29 @@ class FastANIProc:
     functionality
     '''
 
-    def __init__(self, queries, references):
+    def __init__(self, queries, references, scratch):
         '''
         Initialize a FastANIProc object using query and reference genome filepaths
+        :param scratch: String path of the scratch dir
         :param queries: List of paths to FASTA files of query genomes
         :param references: List of paths to FASTA files of reference genomes
         '''
         self.results = []
         query_path = self.create_file_list(queries)
         reference_path = self.create_file_list(references)
+        # I tried using /dev/stdout, but it seems to not work in prod
+        out_path = scratch + '/fast_ani.out'
         args = [
             'fastANI',
             '--ql', query_path,
             '--rl', reference_path,
-            '-o', '/dev/stdout'
+            '-o', out_path
         ]
         # TODO handle the error case
-        self.raw_output = subprocess.check_output(args)
+        proc = subprocess.Popen(args)
+        proc.wait() # Blocking
+        with open(out_path) as file:
+            self.raw_output = file.read()
 
     def create_file_list(self, paths):
         '''
