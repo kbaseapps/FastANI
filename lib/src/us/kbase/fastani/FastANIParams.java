@@ -23,20 +23,17 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @Generated("com.googlecode.jsonschema2pojo")
 @JsonPropertyOrder({
     "workspace_name",
-    "query_assembly",
-    "reference_assembly",
-    "reference_list"
+    "query_assembly_refs",
+    "reference_assembly_refs"
 })
 public class FastANIParams {
 
     @JsonProperty("workspace_name")
     private java.lang.String workspaceName;
-    @JsonProperty("query_assembly")
-    private java.lang.String queryAssembly;
-    @JsonProperty("reference_assembly")
-    private java.lang.String referenceAssembly;
-    @JsonProperty("reference_list")
-    private List<String> referenceList;
+    @JsonProperty("query_assembly_refs")
+    private List<String> queryAssemblyRefs;
+    @JsonProperty("reference_assembly_refs")
+    private List<String> referenceAssemblyRefs;
     private Map<java.lang.String, Object> additionalProperties = new HashMap<java.lang.String, Object>();
 
     @JsonProperty("workspace_name")
@@ -54,48 +51,33 @@ public class FastANIParams {
         return this;
     }
 
-    @JsonProperty("query_assembly")
-    public java.lang.String getQueryAssembly() {
-        return queryAssembly;
+    @JsonProperty("query_assembly_refs")
+    public List<String> getQueryAssemblyRefs() {
+        return queryAssemblyRefs;
     }
 
-    @JsonProperty("query_assembly")
-    public void setQueryAssembly(java.lang.String queryAssembly) {
-        this.queryAssembly = queryAssembly;
+    @JsonProperty("query_assembly_refs")
+    public void setQueryAssemblyRefs(List<String> queryAssemblyRefs) {
+        this.queryAssemblyRefs = queryAssemblyRefs;
     }
 
-    public FastANIParams withQueryAssembly(java.lang.String queryAssembly) {
-        this.queryAssembly = queryAssembly;
+    public FastANIParams withQueryAssemblyRefs(List<String> queryAssemblyRefs) {
+        this.queryAssemblyRefs = queryAssemblyRefs;
         return this;
     }
 
-    @JsonProperty("reference_assembly")
-    public java.lang.String getReferenceAssembly() {
-        return referenceAssembly;
+    @JsonProperty("reference_assembly_refs")
+    public List<String> getReferenceAssemblyRefs() {
+        return referenceAssemblyRefs;
     }
 
-    @JsonProperty("reference_assembly")
-    public void setReferenceAssembly(java.lang.String referenceAssembly) {
-        this.referenceAssembly = referenceAssembly;
+    @JsonProperty("reference_assembly_refs")
+    public void setReferenceAssemblyRefs(List<String> referenceAssemblyRefs) {
+        this.referenceAssemblyRefs = referenceAssemblyRefs;
     }
 
-    public FastANIParams withReferenceAssembly(java.lang.String referenceAssembly) {
-        this.referenceAssembly = referenceAssembly;
-        return this;
-    }
-
-    @JsonProperty("reference_list")
-    public List<String> getReferenceList() {
-        return referenceList;
-    }
-
-    @JsonProperty("reference_list")
-    public void setReferenceList(List<String> referenceList) {
-        this.referenceList = referenceList;
-    }
-
-    public FastANIParams withReferenceList(List<String> referenceList) {
-        this.referenceList = referenceList;
+    public FastANIParams withReferenceAssemblyRefs(List<String> referenceAssemblyRefs) {
+        this.referenceAssemblyRefs = referenceAssemblyRefs;
         return this;
     }
 
@@ -111,7 +93,7 @@ public class FastANIParams {
 
     @Override
     public java.lang.String toString() {
-        return ((((((((((("FastANIParams"+" [workspaceName=")+ workspaceName)+", queryAssembly=")+ queryAssembly)+", referenceAssembly=")+ referenceAssembly)+", referenceList=")+ referenceList)+", additionalProperties=")+ additionalProperties)+"]");
+        return ((((((((("FastANIParams"+" [workspaceName=")+ workspaceName)+", queryAssemblyRefs=")+ queryAssemblyRefs)+", referenceAssemblyRefs=")+ referenceAssemblyRefs)+", additionalProperties=")+ additionalProperties)+"]");
     }
 
 }

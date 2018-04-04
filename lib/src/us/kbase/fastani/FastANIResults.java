@@ -22,10 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @Generated("com.googlecode.jsonschema2pojo")
 @JsonPropertyOrder({
     "report_name",
-    "report_ref",
-    "percentage_match",
-    "total_fragments",
-    "orthologous_matches"
+    "report_ref"
 })
 public class FastANIResults {
 
@@ -33,12 +30,6 @@ public class FastANIResults {
     private String reportName;
     @JsonProperty("report_ref")
     private String reportRef;
-    @JsonProperty("percentage_match")
-    private Double percentageMatch;
-    @JsonProperty("total_fragments")
-    private Long totalFragments;
-    @JsonProperty("orthologous_matches")
-    private Long orthologousMatches;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("report_name")
@@ -71,51 +62,6 @@ public class FastANIResults {
         return this;
     }
 
-    @JsonProperty("percentage_match")
-    public Double getPercentageMatch() {
-        return percentageMatch;
-    }
-
-    @JsonProperty("percentage_match")
-    public void setPercentageMatch(Double percentageMatch) {
-        this.percentageMatch = percentageMatch;
-    }
-
-    public FastANIResults withPercentageMatch(Double percentageMatch) {
-        this.percentageMatch = percentageMatch;
-        return this;
-    }
-
-    @JsonProperty("total_fragments")
-    public Long getTotalFragments() {
-        return totalFragments;
-    }
-
-    @JsonProperty("total_fragments")
-    public void setTotalFragments(Long totalFragments) {
-        this.totalFragments = totalFragments;
-    }
-
-    public FastANIResults withTotalFragments(Long totalFragments) {
-        this.totalFragments = totalFragments;
-        return this;
-    }
-
-    @JsonProperty("orthologous_matches")
-    public Long getOrthologousMatches() {
-        return orthologousMatches;
-    }
-
-    @JsonProperty("orthologous_matches")
-    public void setOrthologousMatches(Long orthologousMatches) {
-        this.orthologousMatches = orthologousMatches;
-    }
-
-    public FastANIResults withOrthologousMatches(Long orthologousMatches) {
-        this.orthologousMatches = orthologousMatches;
-        return this;
-    }
-
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
@@ -128,7 +74,7 @@ public class FastANIResults {
 
     @Override
     public String toString() {
-        return ((((((((((((("FastANIResults"+" [reportName=")+ reportName)+", reportRef=")+ reportRef)+", percentageMatch=")+ percentageMatch)+", totalFragments=")+ totalFragments)+", orthologousMatches=")+ orthologousMatches)+", additionalProperties=")+ additionalProperties)+"]");
+        return ((((((("FastANIResults"+" [reportName=")+ reportName)+", reportRef=")+ reportRef)+", additionalProperties=")+ additionalProperties)+"]");
     }
 
 }

@@ -11,10 +11,10 @@
     },
     "parameters": [ 
         {
-            "id": "query_assembly",
+            "id": "query_assembly_refs",
             "optional": false,
             "advanced": false,
-            "allow_multiple": false,
+            "allow_multiple": true,
             "default_values": [ "" ],
             "field_type": "text",
             "text_options": {
@@ -22,25 +22,14 @@
             }
         },
         {
-            "id": "reference_assembly",
-            "optional": true,
+            "id": "reference_assembly_refs",
+            "optional": false,
             "advanced": false,
-            "allow_multiple": false,
+            "allow_multiple": true,
             "default_values": [ "" ],
             "field_type": "text",
             "text_options": {
                 "valid_ws_types": [ "KBaseGenomeAnnotations.Assembly" ]
-            }
-        },
-        {
-            "id": "reference_list",
-            "optional": true,
-            "advanced": false,
-            "allow_multiple": false,
-            "default_values": [ "" ],
-            "field_type": "text",
-            "text_options": {
-                "valid_ws_types": [ "KBaseSets.AssemblySet" ]
             }
         }
     ],
@@ -55,18 +44,13 @@
                     "target_property": "workspace_name"
                 },
                 {
-                    "input_parameter": "query_assembly",
-                    "target_property": "query_assembly",
-                    "target_type_transform": "resolved-ref"
+                    "input_parameter": "query_assembly_refs",
+                    "target_property": "query_assembly_refs",
+                    "target_type_transform": "list<resolved-ref>"
                 },
                 {
-                    "input_parameter": "reference_assembly",
-                    "target_property": "reference_assembly",
-                    "target_type_transform": "resolved-ref"
-                },
-                {
-                    "input_parameter": "reference_list",
-                    "target_property": "reference_list",
+                    "input_parameter": "reference_assembly_refs",
+                    "target_property": "reference_assembly_refs",
                     "target_type_transform": "list<resolved-ref>"
                 }
             ],

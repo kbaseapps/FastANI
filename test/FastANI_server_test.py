@@ -115,22 +115,20 @@ class FastANITest(unittest.TestCase):
         b_path = self.scratch + '/b.fna'
         copyfile(TEST_FILE_1, a_path)
         copyfile(TEST_FILE_2, b_path)
-        query_assembly = self.load_fasta_file(a_path, 'test_query')
-        reference_assembly = self.load_fasta_file(b_path, 'test_reference')
+        query_refs = [self.load_fasta_file(a_path, 'test_query')]
+        reference_refs = [self.load_fasta_file(b_path, 'test_reference')]
         results = self.getImpl().fast_ani(self.getContext(), {
             'workspace_name': self.getWsName(),
-            'query_assembly': query_assembly,
-            'reference_assembly': reference_assembly
+            'query_assembly_refs': query_refs,
+            'reference_assembly_refs': reference_refs
         })
-        self.assertEqual(results[0]['percentage_match'], '97.6765')
-        self.assertEqual(results[0]['orthologous_matches'], '1324')
-        self.assertEqual(results[0]['total_fragments'], '1547')
+        self.assertTrue(len(results[0]['report_name']))
+        self.assertTrue(len(results[0]['report_name']))
         return
 
     def test_invalid_refs(self):
         '''
-        Test a basic call to FastANIImpl.fast_ani using a query and reference assembly
-        Copy the FastANI example data into the scratch dir
+        Test invalid data types
         '''
         # TODO
         # The below test is not useful as it just throws an AssemblyUtil exception
@@ -150,10 +148,10 @@ class FastANITest(unittest.TestCase):
 
     def test_assembly_set(self):
         '''
-        Test multiple references using an AssemblySet
+        Test the output data when running on multiple queries and references
         '''
+        # TODO
         # a_path = self.scratch + '/a.fna'
         # copyfile(TEST_FILE_1, a_path)
         # query_assembly = self.load_fasta_file(a_path, 'test_query')
-        # TODO construct an AssemblySet (??)
         pass

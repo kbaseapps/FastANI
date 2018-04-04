@@ -123,15 +123,11 @@ $params is a FastANI.FastANIParams
 $results is a FastANI.FastANIResults
 FastANIParams is a reference to a hash where the following keys are defined:
 	workspace_name has a value which is a string
-	query_assembly has a value which is a string
-	reference_assembly has a value which is a string
-	reference_list has a value which is a reference to a list where each element is a string
+	query_assembly_refs has a value which is a reference to a list where each element is a string
+	reference_assembly_refs has a value which is a reference to a list where each element is a string
 FastANIResults is a reference to a hash where the following keys are defined:
 	report_name has a value which is a string
 	report_ref has a value which is a string
-	percentage_match has a value which is a float
-	total_fragments has a value which is an int
-	orthologous_matches has a value which is an int
 
 </pre>
 
@@ -143,15 +139,11 @@ $params is a FastANI.FastANIParams
 $results is a FastANI.FastANIResults
 FastANIParams is a reference to a hash where the following keys are defined:
 	workspace_name has a value which is a string
-	query_assembly has a value which is a string
-	reference_assembly has a value which is a string
-	reference_list has a value which is a reference to a list where each element is a string
+	query_assembly_refs has a value which is a reference to a list where each element is a string
+	reference_assembly_refs has a value which is a reference to a list where each element is a string
 FastANIResults is a reference to a hash where the following keys are defined:
 	report_name has a value which is a string
 	report_ref has a value which is a string
-	percentage_match has a value which is a float
-	total_fragments has a value which is an int
-	orthologous_matches has a value which is an int
 
 
 =end text
@@ -317,9 +309,8 @@ fast_ani input
 <pre>
 a reference to a hash where the following keys are defined:
 workspace_name has a value which is a string
-query_assembly has a value which is a string
-reference_assembly has a value which is a string
-reference_list has a value which is a reference to a list where each element is a string
+query_assembly_refs has a value which is a reference to a list where each element is a string
+reference_assembly_refs has a value which is a reference to a list where each element is a string
 
 </pre>
 
@@ -329,9 +320,8 @@ reference_list has a value which is a reference to a list where each element is 
 
 a reference to a hash where the following keys are defined:
 workspace_name has a value which is a string
-query_assembly has a value which is a string
-reference_assembly has a value which is a string
-reference_list has a value which is a reference to a list where each element is a string
+query_assembly_refs has a value which is a reference to a list where each element is a string
+reference_assembly_refs has a value which is a reference to a list where each element is a string
 
 
 =end text
@@ -359,9 +349,6 @@ fast_ani output
 a reference to a hash where the following keys are defined:
 report_name has a value which is a string
 report_ref has a value which is a string
-percentage_match has a value which is a float
-total_fragments has a value which is an int
-orthologous_matches has a value which is an int
 
 </pre>
 
@@ -372,9 +359,6 @@ orthologous_matches has a value which is an int
 a reference to a hash where the following keys are defined:
 report_name has a value which is a string
 report_ref has a value which is a string
-percentage_match has a value which is a float
-total_fragments has a value which is an int
-orthologous_matches has a value which is an int
 
 
 =end text

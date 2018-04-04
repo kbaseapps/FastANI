@@ -17,43 +17,34 @@ class FastANIProc:
     functionality
     '''
 
-    def __init__(self, query_path):
+    def __init__(self, queries, references):
         '''
-        Initialize a FastANIProc object using the path of a genome to query against
-        :param query_path: Pass in the file path for the FASTA file of the genome to query
+        Initialize a FastANIProc object using query and reference genome filepaths
+        :param queries: List of paths to FASTA files of query genomes
+        :param references: List of paths to FASTA files of reference genomes
         '''
-        self.query_path = query_path
-        if not os.path.isfile(query_path):
-            raise ValueError('File path does not exist for query assembly: ' + query_path)
-        return
-
-    def run(self, refs):
-        '''
-        Execute fastANI against a single reference or a list of references
-        :param refs: List of paths to FASTA files of reference genomes
-        '''
-        reference_path = self.create_reference_file(refs)
+        query_path = self.create_file_list(queries)
+        reference_path = self.create_file_list(references)
         args = [
             'fastANI',
-            '-q', self.query_path,
+            '--ql', query_path,
             '--rl', reference_path,
             '-o', '/dev/stdout'
         ]
         # TODO handle the error case
         self.raw_output = subprocess.check_output(args)
         self.parse_output()
-        return self
 
-    def create_reference_file(self, ref_paths):
+    def create_file_list(self, paths):
         '''
         Create a file that lists paths, one per line (required by fastANI)
         :param refs: a list of genome fasta pathnames
         '''
         # Check that all paths exist
-        for path in ref_paths:
+        for path in paths:
             if not os.path.isfile(path):
                 raise ValueError('File path does not exist for reference assembly: ' + path)
-        contents = "\n".join(ref_paths)
+        contents = "\n".join(paths)
         file = tempfile.NamedTemporaryFile(delete=False)
         file.write(contents)
         file.close()
