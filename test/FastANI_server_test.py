@@ -115,8 +115,10 @@ class FastANITest(unittest.TestCase):
         b_path = self.scratch + '/b.fna'
         copyfile(TEST_FILE_1, a_path)
         copyfile(TEST_FILE_2, b_path)
-        query_refs = [self.load_fasta_file(a_path, 'test_query')]
-        reference_refs = [self.load_fasta_file(b_path, 'test_reference')]
+        a_ref = self.load_fasta_file(a_path, 'test_assembly_a')
+        b_ref = self.load_fasta_file(b_path, 'test_assembly_b')
+        query_refs = [a_ref, b_ref]
+        reference_refs = [b_ref, a_ref]
         results = self.getImpl().fast_ani(self.getContext(), {
             'workspace_name': self.getWsName(),
             'query_assembly_refs': query_refs,

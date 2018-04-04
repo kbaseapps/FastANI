@@ -23,6 +23,7 @@ class FastANIProc:
         :param queries: List of paths to FASTA files of query genomes
         :param references: List of paths to FASTA files of reference genomes
         '''
+        self.results = []
         query_path = self.create_file_list(queries)
         reference_path = self.create_file_list(references)
         args = [
@@ -55,8 +56,18 @@ class FastANIProc:
         Parse the output content after executing the binary
         :param out_str: Output string from running FastANI (see self.run)
         '''
-        parts = self.raw_output[:-1].split(" ")
-        self.percentage_match = parts[2]
-        self.orthologous_matches = parts[3]
-        self.total_fragments = parts[4]
+        print('-- OUTPUT\n')
+        print(self.raw_output)
+        entries = self.raw_output.split("\n")
+        self.result_count = len(entries)
+        self.results = []
+        for line in entries:
+            parts = self.raw_output[:-1].split(" ")
+            self.results.append({
+                'query': parts[0],
+                'reference': parts[1],
+                'percentage_match': parts[2],
+                'orthologous_matches': parts[3],
+                'total_fragments': parts[4]
+            })
         return self

@@ -3,6 +3,7 @@
 import os
 from KBaseReport.KBaseReportClient import KBaseReport
 from fast_ani_proc import FastANIProc
+from fast_ani_output import FastANIOutput
 from fetch_assembly import fetch_multiple
 #END_HEADER
 
@@ -53,14 +54,9 @@ class FastANI:
         query_files = fetch_multiple(self.callback_url, params['query_assembly_refs'])
         reference_files = fetch_multiple(self.callback_url, params['reference_assembly_refs'])
         fast_ani_proc = FastANIProc(query_files, reference_files)
-        report_summary = ''.join([
-            fast_ani_proc.raw_output, '\n',
-            'ANI Estimate: ', fast_ani_proc.percentage_match, '\n',
-            'Total sequence fragments: ', fast_ani_proc.total_fragments, '\n',
-            'Orthologous matches: ', fast_ani_proc.orthologous_matches
-        ])
+        fast_ani_output = FastANIOutput(fast_ani_proc.raw_output)
         report_info = KBaseReport(self.callback_url).create({
-            'report': {'objects_created': [], 'text_message': report_summary},
+            'report': {'objects_created': [], 'text_message': fast_ani_output.summary},
             'workspace_name': params['workspace_name']
         })
         results = {
