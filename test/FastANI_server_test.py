@@ -126,7 +126,6 @@ class FastANITest(unittest.TestCase):
         })
         self.assertTrue(len(results[0]['report_name']))
         self.assertTrue(len(results[0]['report_ref']))
-        return
 
     def test_single_references(self):
         '''

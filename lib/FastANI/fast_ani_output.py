@@ -17,8 +17,10 @@ class FastANIOutput:
         '''
         entries = output.split("\n")
         self.results = []
-        for line in entries[:-1]:
+        for line in entries:
             parts = line.split(" ")
+            if len(parts) != 5:
+                continue
             self.results.append({
                 'query': parts[0],
                 'reference': parts[1],
