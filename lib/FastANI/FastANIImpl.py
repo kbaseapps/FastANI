@@ -24,7 +24,7 @@ class FastANI:
     ######################################### noqa
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/jayrbolton/kbase-fastANI.git"
-    GIT_COMMIT_HASH = "0980ed69c691ebe7e7c77184656a3c9202520d73"
+    GIT_COMMIT_HASH = "e1b06ccedb6ef5862f26a641a75b4dd83c4824a9"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -73,9 +73,15 @@ class FastANI:
             pass
         fast_ani_proc = FastANIProc(query_file['path'])
         fast_ani_proc.run(refs)
+        report_summary = ''.join([
+            fast_ani_proc.raw_output, '\n',
+            'ANI Estimate: ', fast_ani_proc.percentage_match, '\n',
+            'Total sequence fragments: ', fast_ani_proc.total_fragments, '\n',
+            'Orthologous matches: ', fast_ani_proc.orthologous_matches
+        ])
         report_obj = {
             'objects_created': [],
-            'text_message': 'Total percentage match: ' + fast_ani_proc.percentage_match
+            'text_message': report_summary
         }
         report = KBaseReport(self.callback_url)
         report_info = report.create({

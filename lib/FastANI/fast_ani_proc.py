@@ -40,8 +40,8 @@ class FastANIProc:
             '-o', '/dev/stdout'
         ]
         # TODO handle the error case
-        out_str = subprocess.check_output(args)
-        self.get_output(out_str)
+        self.raw_output = subprocess.check_output(args)
+        self.parse_output()
         return self
 
     def create_reference_file(self, ref_paths):
@@ -59,12 +59,12 @@ class FastANIProc:
         file.close()
         return file.name
 
-    def get_output(self, out_str):
+    def parse_output(self):
         '''
         Parse the output content after executing the binary
         :param out_str: Output string from running FastANI (see self.run)
         '''
-        parts = out_str[:-1].split(" ")
+        parts = self.raw_output[:-1].split(" ")
         self.percentage_match = parts[2]
         self.orthologous_matches = parts[3]
         self.total_fragments = parts[4]

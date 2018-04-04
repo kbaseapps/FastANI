@@ -6,8 +6,10 @@ MAINTAINER KBase Developer
 # install line here, a git checkout to download code, or run any other
 # installation scripts.
 
-# RUN apt-get update
-
+# We require R and genPlotR to generate FastANIs visualization
+# Leaving this out for now as it only works for FastANI 1:1
+# RUN apt-get update && apt-get install -y r-base
+# RUN Rscript -e "install.packages('genoPlotR', repos='http://cran.us.r-project.org')"
 
 # -----------------------------------------
 
@@ -22,7 +24,6 @@ RUN make all
 ENTRYPOINT [ "./scripts/entrypoint.sh" ]
 
 # Fetch and compile FastANI
-
 RUN mkdir -p bin && \
     git clone https://github.com/ParBLiSS/FastANI.git bin/FastANI && \
     cd bin/FastANI && \

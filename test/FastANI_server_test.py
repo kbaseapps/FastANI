@@ -127,6 +127,27 @@ class FastANITest(unittest.TestCase):
         self.assertEqual(results[0]['total_fragments'], '1547')
         return
 
+    def test_invalid_refs(self):
+        '''
+        Test a basic call to FastANIImpl.fast_ani using a query and reference assembly
+        Copy the FastANI example data into the scratch dir
+        '''
+        # TODO
+        # The below test is not useful as it just throws an AssemblyUtil exception
+        # a_path = self.scratch + '/a_empty.fna'
+        # b_path = self.scratch + '/b_empty.fna'
+        # open(a_path, 'a').close()
+        # open(b_path, 'a').close()
+        # query_assembly = self.load_fasta_file(a_path, 'test_query')
+        # reference_assembly = self.load_fasta_file(b_path, 'reference_assembly')
+        # results = self.getImpl().fast_ani(self.getContext(), {
+        #     'workspace_name': self.getWsName(),
+        #     'query_assembly': query_assembly,
+        #     'reference_assembly': reference_assembly
+        # })
+        # print(results)
+        # return
+
     def test_assembly_set(self):
         '''
         Test multiple references using an AssemblySet
