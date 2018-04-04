@@ -50,24 +50,3 @@ class FastANIProc:
         file.write(contents)
         file.close()
         return file.name
-
-    def parse_output(self):
-        '''
-        Parse the output content after executing the binary
-        :param out_str: Output string from running FastANI (see self.run)
-        '''
-        print('-- OUTPUT\n')
-        print(self.raw_output)
-        entries = self.raw_output.split("\n")
-        self.result_count = len(entries)
-        self.results = []
-        for line in entries:
-            parts = self.raw_output[:-1].split(" ")
-            self.results.append({
-                'query': parts[0],
-                'reference': parts[1],
-                'percentage_match': parts[2],
-                'orthologous_matches': parts[3],
-                'total_fragments': parts[4]
-            })
-        return self
