@@ -34,7 +34,6 @@ class FastANIProc:
         ]
         # TODO handle the error case
         self.raw_output = subprocess.check_output(args)
-        self.parse_output()
 
     def create_file_list(self, paths):
         '''

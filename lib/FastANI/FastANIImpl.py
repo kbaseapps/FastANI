@@ -16,7 +16,6 @@ class FastANI:
     Module Description:
     A KBase module: FastANI
     '''
-
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/jayrbolton/kbase-fastANI.git"
     GIT_COMMIT_HASH = "c2dfe6c350b994f4d1ae04c95163473af8033487"
@@ -50,6 +49,10 @@ class FastANI:
         for name in ['workspace_name', 'query_assembly_refs', 'reference_assembly_refs']:
             if name not in params:
                 raise ValueError('Parameter "' + name + '" is not set in input arguments')
+        if isinstance(params['query_assembly_refs'], basestring):
+            params['query_assembly_refs'] = [params['query_assembly_refs']]
+        if isinstance(params['reference_assembly_refs'], basestring):
+            params['reference_assembly_refs'] = [params['reference_assembly_refs']]
         # Download the query assemblies
         query_files = fetch_multiple(self.callback_url, params['query_assembly_refs'])
         reference_files = fetch_multiple(self.callback_url, params['reference_assembly_refs'])

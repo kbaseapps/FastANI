@@ -125,8 +125,24 @@ class FastANITest(unittest.TestCase):
             'reference_assembly_refs': reference_refs
         })
         self.assertTrue(len(results[0]['report_name']))
-        self.assertTrue(len(results[0]['report_name']))
+        self.assertTrue(len(results[0]['report_ref']))
         return
+
+    def test_single_references(self):
+        '''
+        Test the case when they just pass in a single query and single reference
+        '''
+        a_path = self.scratch + '/a_single.fna'
+        b_path = self.scratch + '/b_single.fna'
+        copyfile(TEST_FILE_1, a_path)
+        copyfile(TEST_FILE_2, b_path)
+        results = self.getImpl().fast_ani(self.getContext(), {
+            'workspace_name': self.getWsName(),
+            'query_assembly_refs': self.load_fasta_file(a_path, 'a'),
+            'reference_assembly_refs': self.load_fasta_file(b_path, 'b')
+        })
+        self.assertTrue(len(results[0]['report_name']))
+        self.assertTrue(len(results[0]['report_ref']))
 
     def test_invalid_refs(self):
         '''

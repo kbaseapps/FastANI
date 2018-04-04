@@ -1,12 +1,16 @@
-# This class is responsible for parsing and pretty-printing the text output from FastANI
+import os
+
 
 class FastANIOutput:
+    '''
+    This class is responsible for parsing and pretty-printing the text output from FastANI
+    '''
 
     def __init__(self, output):
         self.raw_output = output
         self.get_results(output)
         self.get_summary()
-    
+
     def get_results(self, output):
         '''
         Parse and save an array of results
@@ -29,8 +33,8 @@ class FastANIOutput:
         for result in self.results:
             self.summary += '\n\n'
             self.summary += ''.join([
-                'Query: ', result['query'], '\n',
-                'Reference: ', result['reference'], '\n',
+                'Query: ', os.path.basename(result['query']), '\n',
+                'Reference: ', os.path.basename(result['reference']), '\n',
                 'ANI Estimate: ', result['percentage_match'], '\n',
                 'Total fragments: ', result['total_fragments'], '\n',
                 'Orthologous matches: ', result['orthologous_matches']
