@@ -60,7 +60,7 @@ class FastANI:
         fast_ani_output = FastANIOutput(fast_ani_proc.raw_output)
         print('Finished running.. Summary:\n' + fast_ani_output.summary)
         report_info = KBaseReport(self.callback_url).create({
-            'report': {'objects_created': [], 'text_message': fast_ani_output.summary},
+            'report': {'objects_created': [], 'text_message': fast_ani_proc.raw_output},
             'workspace_name': params['workspace_name']
         })
         results = {
