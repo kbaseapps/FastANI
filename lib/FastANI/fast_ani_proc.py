@@ -37,7 +37,7 @@ class FastANIProc:
         ]
         # TODO handle the error case
         proc = subprocess.Popen(args)
-        proc.wait() # Blocking
+        proc.wait()  # Blocking
         with open(out_path) as file:
             self.raw_output = file.read()
 
