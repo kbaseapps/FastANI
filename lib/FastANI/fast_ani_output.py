@@ -1,43 +1,60 @@
 import os
 
+# Construct some pretty-ish output for FastANI
 
-class FastANIOutput:
+
+def get_result_data(output_paths):
     '''
-    This class is responsible for parsing and pretty-printing the text output from FastANI
+    Create a list of objects of all the result data from running fastani
     '''
-
-    def __init__(self, output):
-        self.raw_output = output
-        self.get_results(output)
-        self.get_summary()
-
-    def get_results(self, output):
-        '''
-        Parse and save an array of results
-        '''
-        entries = output.split("\n")
-        self.results = []
-        for line in entries:
-            parts = line.split(" ")
-            if len(parts) != 5:
-                continue
-            self.results.append({
-                'query': parts[0],
-                'reference': parts[1],
+    result_data = []
+    print('OUTPUT PATHS', output_paths)
+    for path in output_paths:
+        with open(path) as file:
+            contents = file.read()
+            parts = contents[:-1].split(" ")
+            result_data.append({
+                'query_path': parts[0],
+                'reference_path': parts[1],
                 'percentage_match': parts[2],
                 'orthologous_matches': parts[3],
-                'total_fragments': parts[4]
+                'total_fragments': parts[4],
+                'viz_path': path + '.visual.pdf'
             })
-        return self
+    return result_data
 
-    def get_summary(self):
-        self.summary = 'Total results: ' + str(len(self.results))
-        for result in self.results:
-            self.summary += '\n\n'
-            self.summary += ''.join([
-                'Query: ', os.path.basename(result['query']), '\n',
-                'Reference: ', os.path.basename(result['reference']), '\n',
-                'ANI Estimate: ', result['percentage_match'], '\n',
-                'Total fragments: ', result['total_fragments'], '\n',
-                'Orthologous matches: ', result['orthologous_matches']
-            ])
+
+def create_html_tables(result_data):
+    '''
+    For each result, create an html table for it
+    '''
+    headers = ['Query', 'Reference', 'ANI Estimate', 'Orthologous Matches', 'Total Fragments']
+    rows = []
+    for result in result_data:
+        row = [
+            os.path.basename(result['query_path']),
+            os.path.basename(result['reference_path']),
+            result['percentage_match'],
+            result['orthologous_matches'],
+            result['total_fragments']
+        ]
+        rows.append(__join_with_dom_tag('td', row))
+    html = "<table><thead><tr>"
+    # Insert the headers
+    html += __join_with_dom_tag('th', headers)
+    html += "</tr></thead><tbody>"
+    # Insert the rows
+    html += __join_with_dom_tag('tr', rows)
+    html += "</tbody></table>"
+    return html
+
+
+def __join_with_dom_tag(tag, list):
+    '''
+    Wrap an array of strings into tags.
+    eg. __join_with_dom_tag('td', ['x', 'y']) -> "<td>x</td><td>y</td>"
+    '''
+    open_tag = "<" + tag + ">"
+    end_tag = "</" + tag + ">"
+    join_with = end_tag + open_tag  # eg. </tr><tr>
+    return open_tag + join_with.join(list) + end_tag

@@ -11,18 +11,7 @@
     },
     "parameters": [ 
         {
-            "id": "query_assembly_refs",
-            "optional": false,
-            "advanced": false,
-            "allow_multiple": true,
-            "default_values": [ "" ],
-            "field_type": "text",
-            "text_options": {
-                "valid_ws_types": [ "KBaseGenomeAnnotations.Assembly" ]
-            }
-        },
-        {
-            "id": "reference_assembly_refs",
+            "id": "assembly_refs",
             "optional": false,
             "advanced": false,
             "allow_multiple": true,
@@ -44,13 +33,8 @@
                     "target_property": "workspace_name"
                 },
                 {
-                    "input_parameter": "query_assembly_refs",
-                    "target_property": "query_assembly_refs",
-                    "target_type_transform": "list<resolved-ref>"
-                },
-                {
-                    "input_parameter": "reference_assembly_refs",
-                    "target_property": "reference_assembly_refs",
+                    "input_parameter": "assembly_refs",
+                    "target_property": "assembly_refs",
                     "target_type_transform": "list<resolved-ref>"
                 }
             ],

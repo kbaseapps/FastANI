@@ -1,21 +1,26 @@
+import multiprocessing
 from AssemblyUtil.AssemblyUtilClient import AssemblyUtil
 
-# Some simple boilerplate to fetch an assembly path
+# Fetch genome assemblies in parallel
 
 
 def fetch_assembly(callback_url, ref):
+    '''
+    Fetch a single assembly file with a workspace reference
+    '''
     assembly_util = AssemblyUtil(callback_url)
     return assembly_util.get_assembly_as_fasta({'ref': ref})['path']
 
 
 def fetch_multiple(callback_url, refs):
     '''
-    Fetch multiple assembly files and return them in an array
+    Fetch multiple assembly files in parallel and return them in an array
     :param callback_url:
     :param refs: array of workspace references to assemblies
-    :returns: array of paths
+    :returns: array of file path
     '''
-    paths = []
+    pool = multiprocessing.Pool(processes=len(refs))
+    jobs = []
     for ref in refs:
-        paths.append(fetch_assembly(callback_url, ref))
-    return paths
+        jobs.append(pool.apply_async(fetch_assembly, (callback_url, ref)))
+    return [j.get() for j in jobs]

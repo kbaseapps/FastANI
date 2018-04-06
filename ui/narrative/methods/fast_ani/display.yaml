@@ -29,11 +29,7 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    query_assembly_refs:
-        ui-name: Assemblies to query
-        short-hint: Assembled genome to pass as the query parameter to FastANI. Can be multiple assemblies.
-        long-hint: Pass in multiple queries to get results for each query/reference pair
-    reference_assembly_refs:
+    assembly_refs:
         ui-name: Assemblies to reference
         short-hint: Assembled genome to pass as the reference parameter to FastANI. Can be multiple assemblies.
         long-hint: Pass in multiple references to get results for each query/reference pair

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 #BEGIN_HEADER
 import os
-from KBaseReport.KBaseReportClient import KBaseReport
-from fast_ani_proc import FastANIProc
-from fast_ani_output import FastANIOutput
+from fast_ani_proc import run_fast_ani_pairwise
+from fast_ani_output import create_html_tables, get_result_data
 from fetch_assembly import fetch_multiple
+from fast_ani_report import create_report
 #END_HEADER
 
 
@@ -46,27 +46,18 @@ class FastANI:
         # return variables are: results
         #BEGIN fast_ani
         print('Starting FastANI function and validating parameters.')
-        for name in ['workspace_name', 'query_assembly_refs', 'reference_assembly_refs']:
+        for name in ['workspace_name', 'assembly_refs']:
             if name not in params:
                 raise ValueError('Parameter "' + name + '" is not set in input arguments')
-        if isinstance(params['query_assembly_refs'], basestring):
-            params['query_assembly_refs'] = [params['query_assembly_refs']]
-        if isinstance(params['reference_assembly_refs'], basestring):
-            params['reference_assembly_refs'] = [params['reference_assembly_refs']]
-        # Download the query assemblies
-        query_files = fetch_multiple(self.callback_url, params['query_assembly_refs'])
-        reference_files = fetch_multiple(self.callback_url, params['reference_assembly_refs'])
-        fast_ani_proc = FastANIProc(query_files, reference_files, self.shared_folder)
-        fast_ani_output = FastANIOutput(fast_ani_proc.raw_output)
-        print('Finished running.. Summary:\n' + fast_ani_output.summary)
-        report_info = KBaseReport(self.callback_url).create({
-            'report': {'objects_created': [], 'text_message': fast_ani_output.summary},
-            'workspace_name': params['workspace_name']
-        })
-        results = {
-            'report_name': report_info['name'],
-            'report_ref': report_info['ref']
-        }
+        if isinstance(params['assembly_refs'], basestring):
+            params['assembly_refs'] = [params['assembly_refs']]
+        ws_name = params['workspace_name']
+        # Download the assembly data
+        files = fetch_multiple(self.callback_url, params['assembly_refs'])
+        output_paths = run_fast_ani_pairwise(self.shared_folder, files)
+        result_data = get_result_data(output_paths)
+        html_tables = create_html_tables(result_data)
+        results = create_report(self.callback_url, self.shared_folder, ws_name, html_tables)
         #END fast_ani
         return [results]
 

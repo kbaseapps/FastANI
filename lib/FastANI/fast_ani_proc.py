@@ -1,57 +1,56 @@
-import subprocess
-import tempfile
+import sys
 import os
+import subprocess
+import multiprocessing
 
 # This module provides a way to run the fastANI binary, pass
 # in data, and read the output
 
 
-class FastANIProc:
+def run_fast_ani_pairwise(scratch, paths):
     '''
-    A wrapper for the FastANI binary, allowing easy parsing of parameters and results
-
-    Example result string from fastANI:
-    "data/Shigella_flexneri_2a_01.fna data/Escherichia_coli_str_K12_MG1655.fna 97.7443 1305 1608"
-
-    This module can be expanded if we need more parsing/processing
-    functionality
+    Given a list of assembly paths, run fastANI on every pair
+    Runs in parallel on each cpu
+    :param scratch: string path where to put all output
+    :param paths: list of paths to each assembly file (fasta format)
+    :returns: array of output result paths
     '''
+    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
+    jobs = []
+    for p1 in paths:
+        for p2 in paths:
+            jobs.append(pool.apply_async(__run_proc, (scratch, p1, p2)))
+    out_paths = [j.get() for j in jobs]
+    return out_paths
 
-    def __init__(self, queries, references, scratch):
-        '''
-        Initialize a FastANIProc object using query and reference genome filepaths
-        :param scratch: String path of the scratch dir
-        :param queries: List of paths to FASTA files of query genomes
-        :param references: List of paths to FASTA files of reference genomes
-        '''
-        self.results = []
-        query_path = self.create_file_list(queries)
-        reference_path = self.create_file_list(references)
-        # I tried using /dev/stdout, but it seems to not work in prod
-        out_path = scratch + '/fast_ani.out'
-        args = [
-            'fastANI',
-            '--ql', query_path,
-            '--rl', reference_path,
-            '-o', out_path
-        ]
-        # TODO handle the error case
-        proc = subprocess.Popen(args)
-        proc.wait()  # Blocking
-        with open(out_path) as file:
-            self.raw_output = file.read()
 
-    def create_file_list(self, paths):
-        '''
-        Create a file that lists paths, one per line (required by fastANI)
-        :param refs: a list of genome fasta pathnames
-        '''
-        # Check that all paths exist
-        for path in paths:
-            if not os.path.isfile(path):
-                raise ValueError('File path does not exist for reference assembly: ' + path)
-        contents = "\n".join(paths)
-        file = tempfile.NamedTemporaryFile(delete=False)
-        file.write(contents)
-        file.close()
-        return file.name
+def __run_proc(scratch, path1, path2):
+    def basename(path): return os.path.basename(path).split('.')[0]
+    out_name = basename(path1) + '-' + basename(path2) + '.out'
+    out_path = os.path.join(scratch, out_name)
+    args = ['fastANI', '-q', path1, '-r', path2, '--visualize', '-o', out_path]
+    try:
+        subprocess.Popen(args).wait()
+    except OSError as err:
+        print('Error running fastANI:', str(err))
+        raise err
+    except:
+        print('Unexpected error:', sys.exc_info()[0])
+        __visualize(path1, path2, out_path)
+    return out_path
+
+
+def __visualize(path1, path2, out_path):
+    '''
+    Given the output path for a fastANI result, build the PDF visualization file using Rscript
+    $ Rscript scripts/visualize.R B_quintana.fna B_henselae.fna fastani.out.visual
+    '''
+    script_path = os.path.join(os.path.dirname(__file__), '../../scripts/visualize.R')
+    args = ['Rscript', script_path, path1, path2, out_path + '.visual']
+    try:
+        subprocess.Popen(args).wait()
+    except OSError as err:
+        print('Error running visualizer:', str(err))
+        raise err
+    except:
+        print('Unexpected error:', sys.exc_info()[0])

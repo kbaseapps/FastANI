@@ -6,8 +6,7 @@ module FastANI {
     /* fast_ani input */
     typedef structure {
         string workspace_name;
-        list<string> query_assembly_refs;
-        list<string> reference_assembly_refs;
+        list<string> assembly_refs;
     } FastANIParams;
 
     /* fast_ani output */
