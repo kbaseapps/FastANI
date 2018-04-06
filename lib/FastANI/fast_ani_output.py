@@ -13,14 +13,17 @@ def get_result_data(output_paths):
         with open(path) as file:
             contents = file.read()
             parts = contents[:-1].split(" ")
-            result_data.append({
-                'query_path': parts[0],
-                'reference_path': parts[1],
-                'percentage_match': parts[2],
-                'orthologous_matches': parts[3],
-                'total_fragments': parts[4],
-                'viz_path': path + '.visual.pdf'
-            })
+            if len(parts) == 5:
+                result_data.append({
+                    'query_path': parts[0],
+                    'reference_path': parts[1],
+                    'percentage_match': parts[2],
+                    'orthologous_matches': parts[3],
+                    'total_fragments': parts[4],
+                    'viz_path': path + '.visual.pdf'
+                })
+            else:
+                print('Invalid result:', contents)
     return result_data
 
 
