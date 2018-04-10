@@ -106,7 +106,7 @@ class FastANITest(unittest.TestCase):
         self.assertTrue(os.path.isfile(out_path))
         return
 
-    def test_single_reference(self):
+    def test_run_fast_ani(self):
         '''
         Test a basic call to FastANIImpl.fast_ani using a query and reference assembly
         Copy the FastANI example data into the scratch dir

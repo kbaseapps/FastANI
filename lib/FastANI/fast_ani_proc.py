@@ -40,7 +40,7 @@ def __run_proc(scratch, path1, path2):
         raise err
     except:
         print('Unexpected error:', sys.exc_info()[0])
-        __visualize(path1, path2, out_path)
+    __visualize(path1, path2, out_path)
     return out_path
 
 

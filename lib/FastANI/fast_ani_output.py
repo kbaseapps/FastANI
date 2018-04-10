@@ -32,7 +32,7 @@ def get_result_data(output_paths):
                 })
             else:
                 print('Invalid result:', contents)
-    result_data = sorted(result_data, key=lambda r: r['percentage_match'])
+    result_data = sorted(result_data, key=lambda r: float(r['percentage_match']))
     return result_data
 
 
@@ -47,7 +47,7 @@ def create_file_links(result_data):
         files.append({
             'path': path,
             'name': basename,
-            'label': basename,
+            'label': result_data['query_assembly'] + '-' + result_data['reference_assembly'],
             'description': 'PDF visualization of ANI matches'
         })
     return files
