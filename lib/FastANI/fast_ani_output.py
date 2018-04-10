@@ -1,4 +1,11 @@
+# -*- coding: utf-8 -*-
 import os
+from jinja2 import Environment, PackageLoader, select_autoescape
+
+env = Environment(
+    loader=PackageLoader('FastANI', 'templates'),
+    autoescape=select_autoescape(['html'])
+)
 
 # Construct some pretty-ish output for FastANI
 
@@ -15,8 +22,8 @@ def get_result_data(output_paths):
             parts = contents[:-1].split(" ")
             if len(parts) == 5:
                 result_data.append({
-                    'query_path': parts[0],
-                    'reference_path': parts[1],
+                    'query_path': __filename(parts[0]),
+                    'reference_path': __filename(parts[1]),
                     'percentage_match': parts[2],
                     'orthologous_matches': parts[3],
                     'total_fragments': parts[4],
@@ -24,6 +31,7 @@ def get_result_data(output_paths):
                 })
             else:
                 print('Invalid result:', contents)
+    result_data = sorted(result_data, key=lambda r: r['percentage_match'])
     return result_data
 
 
@@ -31,33 +39,12 @@ def create_html_tables(result_data):
     '''
     For each result, create an html table for it
     '''
-    headers = ['Query', 'Reference', 'ANI Estimate', 'Orthologous Matches', 'Total Fragments']
-    rows = []
-    for result in result_data:
-        row = [
-            os.path.basename(result['query_path']),
-            os.path.basename(result['reference_path']),
-            result['percentage_match'],
-            result['orthologous_matches'],
-            result['total_fragments']
-        ]
-        rows.append(__join_with_dom_tag('td', row))
-    html = "<table><thead><tr>"
-    # Insert the headers
-    html += __join_with_dom_tag('th', headers)
-    html += "</tr></thead><tbody>"
-    # Insert the rows
-    html += __join_with_dom_tag('tr', rows)
-    html += "</tbody></table>"
-    return html
+    headers = ['Query', 'Reference', 'ANI Estimate', 'Matches',
+               'Total', 'Visualization']
+    template = env.get_template('result_tables.html')
+    return template.render(headers=headers, results=result_data)
 
 
-def __join_with_dom_tag(tag, list):
-    '''
-    Wrap an array of strings into tags.
-    eg. __join_with_dom_tag('td', ['x', 'y']) -> "<td>x</td><td>y</td>"
-    '''
-    open_tag = "<" + tag + ">"
-    end_tag = "</" + tag + ">"
-    join_with = end_tag + open_tag  # eg. </tr><tr>
-    return open_tag + join_with.join(list) + end_tag
+def __filename(path):
+    "Return the filename, without extension, of a full path"
+    return os.path.splitext(os.path.basename(path))[0]

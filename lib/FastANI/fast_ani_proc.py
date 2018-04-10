@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 import os
 import subprocess
@@ -19,6 +20,8 @@ def run_fast_ani_pairwise(scratch, paths):
     jobs = []
     for p1 in paths:
         for p2 in paths:
+            if p1 == p2:
+                continue
             jobs.append(pool.apply_async(__run_proc, (scratch, p1, p2)))
     out_paths = [j.get() for j in jobs]
     return out_paths

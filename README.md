@@ -4,6 +4,8 @@ A [KBase](https://kbase.us) module using the [KBase SDK](https://github.com/kbas
 
 [FastANI](https://github.com/ParBLiSS/FastANI) is a whole-genome similarity estimation utility. Refer to its documentation for more details about the algorithm.
 
+This project uses Jinja2 for templating html/css. You can install pip dependencies locally with pipenv and the Pipfile
+
 ## Manual tests
 
 I have some manual unit tests that bypass the kb-sdk workflow to support TDD. To get these to run:
