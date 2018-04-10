@@ -27,7 +27,8 @@ def get_result_data(output_paths):
                     'percentage_match': parts[2],
                     'orthologous_matches': parts[3],
                     'total_fragments': parts[4],
-                    'viz_path': path + '.visual.pdf'
+                    'viz_path': path + '.visual.pdf',
+                    'viz_filename': os.path.basename(path + '.visual.pdf')
                 })
             else:
                 print('Invalid result:', contents)
@@ -49,7 +50,7 @@ def create_file_links(result_data):
             'label': basename,
             'description': 'PDF visualization of ANI matches'
         })
-    pass
+    return files
 
 
 def create_html_tables(result_data):

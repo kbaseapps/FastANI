@@ -30,7 +30,7 @@
         <td class='pv2 ph3'>{{ item.percentage_match }}</td>
         <td class='pv2 ph3'>{{ item.orthologous_matches }}</td>
         <td class='pv2 ph3'>{{ item.total_fragments }}</td>
-        <td class='pv2 ph3'><a href="file:///{{ item.viz_path }}">PDF</a></td>
+        <td class='pv2 ph3'><a href="{{ item.viz_filename }}">PDF</a></td>
       </tr>
       {% endfor %}
     </tbody>
