@@ -33,6 +33,7 @@ def __run_proc(scratch, path1, path2):
     out_path = os.path.join(scratch, out_name)
     args = ['fastANI', '-q', path1, '-r', path2, '--visualize', '-o', out_path]
     try:
+
         subprocess.Popen(args).wait()
     except OSError as err:
         print('Error running fastANI:', str(err))

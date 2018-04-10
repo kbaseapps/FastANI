@@ -2,7 +2,7 @@
 #BEGIN_HEADER
 import os
 from fast_ani_proc import run_fast_ani_pairwise
-from fast_ani_output import create_html_tables, get_result_data
+from fast_ani_output import get_result_data
 from fetch_assembly import fetch_multiple
 from fast_ani_report import create_report
 #END_HEADER
@@ -56,8 +56,7 @@ class FastANI:
         files = fetch_multiple(self.callback_url, params['assembly_refs'])
         output_paths = run_fast_ani_pairwise(self.shared_folder, files)
         result_data = get_result_data(output_paths)
-        html_tables = create_html_tables(result_data)
-        results = create_report(self.callback_url, self.shared_folder, ws_name, html_tables)
+        results = create_report(self.callback_url, self.shared_folder, ws_name, result_data)
         #END fast_ani
         return [results]
 
