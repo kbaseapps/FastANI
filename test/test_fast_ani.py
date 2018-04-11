@@ -16,6 +16,9 @@ class TestFastANI(unittest.TestCase):
         dir = os.path.abspath(dirname + '/../data')
         path1 = os.path.join(dir, 'shigella.fna')
         path2 = os.path.join(dir, 'ecoli.fna')
+        print(path1, path2)
+        self.assertTrue(os.path.isfile(path1))
+        self.assertTrue(os.path.isfile(path2))
         out_paths = run_fast_ani_pairwise('/tmp', [path1, path2])
         self.assertEqual(set(out_paths), set([
             '/tmp/ecoli-shigella.out',

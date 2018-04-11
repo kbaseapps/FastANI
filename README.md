@@ -12,7 +12,7 @@ I have some manual unit tests that bypass the kb-sdk workflow to support TDD. To
 
 * Download and compile fastANI and place the executable in your PATH
 * Install R and the genPlotR package
-* `python test/test_fast_ani.py`
+* `PYTHONPATH=lib python test/test_fast_ani.py`
 
 ## Misc. notes about FastANI
 

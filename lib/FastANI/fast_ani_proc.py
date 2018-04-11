@@ -35,10 +35,10 @@ def __run_proc(scratch, path1, path2):
     try:
         subprocess.Popen(args).wait()
     except OSError as err:
-        print('Error running fastANI:', str(err))
+        print('Error running fastANI:', str(err), 'with args:', args)
         raise err
     except:
-        print('Unexpected error:', sys.exc_info()[0])
+        print('Unexpected error:', sys.exc_info()[0], 'with args:', args)
     __visualize(path1, path2, out_path)
     return out_path
 
@@ -48,12 +48,14 @@ def __visualize(path1, path2, out_path):
     Given the output path for a fastANI result, build the PDF visualization file using Rscript
     $ Rscript scripts/visualize.R B_quintana.fna B_henselae.fna fastani.out.visual
     '''
-    script_path = os.path.join(os.path.dirname(__file__), '../../scripts/visualize.R')
+    script_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), '../../scripts/visualize.R')
+    )
     args = ['Rscript', script_path, path1, path2, out_path + '.visual']
     try:
         subprocess.Popen(args).wait()
     except OSError as err:
-        print('Error running visualizer:', str(err))
+        print('Error running visualizer:', str(err), 'with args:', args)
         raise err
     except:
-        print('Unexpected error:', sys.exc_info()[0])
+        print('Unexpected error:', sys.exc_info()[0], 'with args:', args)
