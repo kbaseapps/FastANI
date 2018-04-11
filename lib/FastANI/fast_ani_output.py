@@ -15,7 +15,6 @@ def get_result_data(output_paths):
     Create a list of objects of all the result data from running fastani
     '''
     result_data = []
-    print('OUTPUT PATHS', output_paths)
     for path in output_paths:
         with open(path) as file:
             contents = file.read()
