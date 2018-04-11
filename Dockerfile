@@ -37,7 +37,6 @@ RUN pip install -r requirements.txt
 
 COPY ./ /kb/module
 RUN mkdir -p /kb/module/work
-WORKDIR /kb/module
 RUN chmod -R a+rw /kb/module
 RUN make all
 ENTRYPOINT [ "./scripts/entrypoint.sh" ]
