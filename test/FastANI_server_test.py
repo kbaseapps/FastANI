@@ -3,6 +3,7 @@ import unittest
 import os
 import time
 import subprocess
+import tempfile
 
 from os import environ
 try:
@@ -91,7 +92,8 @@ class FastANITest(unittest.TestCase):
         """
         Run the compiled binary using the given example data
         """
-        out_path = '/tmp/fastani-out.txt'
+        tmp_dir = tempfile.mkdtemp()
+        out_path = os.path.join(tmp_dir, 'fastani.out')
         args = [
             'fastANI',
             '-q', TEST_FILE_2,

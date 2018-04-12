@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+import tempfile
 dirname = os.path.dirname(__file__)
 sys.path.insert(0, os.path.abspath(os.path.join(dirname, '../lib/FastANI/')))
 
@@ -13,16 +14,17 @@ from fast_ani_proc import run_fast_ani_pairwise  # noqa
 class TestFastANI(unittest.TestCase):
 
     def test_fast_ani_proc_and_output(self):
-        dir = os.path.abspath(dirname + '/../data')
-        path1 = os.path.join(dir, 'shigella.fna')
-        path2 = os.path.join(dir, 'ecoli.fna')
+        data_dir = os.path.join(dirname, 'data')
+        path1 = os.path.join(data_dir, 'shigella.fna')
+        path2 = os.path.join(data_dir, 'ecoli.fna')
         print(path1, path2)
         self.assertTrue(os.path.isfile(path1))
         self.assertTrue(os.path.isfile(path2))
-        out_paths = run_fast_ani_pairwise('/tmp', [path1, path2])
+        tmp_dir = tempfile.mkdtemp()
+        out_paths = run_fast_ani_pairwise(tmp_dir, [path1, path2])
         self.assertEqual(set(out_paths), set([
-            '/tmp/ecoli-shigella.out',
-            '/tmp/shigella-ecoli.out'
+            os.path.join(tmp_dir, 'ecoli-shigella.out'),
+            os.path.join(tmp_dir, 'shigella-ecoli.out')
         ]))
         result_data = get_result_data(out_paths)
         print(result_data)
