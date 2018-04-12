@@ -35,23 +35,6 @@ def get_result_data(output_paths):
     return result_data
 
 
-def create_file_links(result_data):
-    """
-    For each result, create a file link dict that can be used in the kbase report
-    """
-    files = []
-    for result in result_data:
-        path = result['viz_path']
-        basename = os.path.basename(result['viz_path']).split('.')[0]
-        files.append({
-            'path': path,
-            'name': basename,
-            'label': result_data['query_assembly'] + '-' + result_data['reference_assembly'],
-            'description': 'PDF visualization of ANI matches'
-        })
-    return files
-
-
 def create_html_tables(result_data):
     """
     For each result, create an html table for it

@@ -14,9 +14,7 @@ RUN git clone https://github.com/ParBLiSS/FastANI.git /opt/FastANI \
     && ./configure \
     && make \
     # Place fastANI in the PATH for this user
-    && ln -s $(readlink -f ./fastANI) /usr/local/bin/fastANI \
-    # Copy some sample data to an absolute path for easy testing
-    && cp -r data/ /tmp/fastANI-data
+    && ln -s $(readlink -f ./fastANI) /usr/local/bin/fastANI
 
 # R and genoPlotR are required for fastANI visualization
 RUN apt-get install -y r-base \

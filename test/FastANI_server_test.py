@@ -19,10 +19,6 @@ from FastANI.authclient import KBaseAuth as _KBaseAuth
 from AssemblyUtil.AssemblyUtilClient import AssemblyUtil
 from shutil import copyfile
 
-# Test file data provided by FastANI
-TEST_FILE_1 = '/tmp/fastANI-data/Escherichia_coli_str_K12_MG1655.fna'
-TEST_FILE_2 = '/tmp/fastANI-data/Shigella_flexneri_2a_01.fna'
-
 
 class FastANITest(unittest.TestCase):
 
@@ -91,13 +87,18 @@ class FastANITest(unittest.TestCase):
     def test_fastani_binary(self):
         """
         Run the compiled binary using the given example data
+        This only tests that fastANI has installed and runs correctly
+        it does not test any python wrapping
         """
         tmp_dir = tempfile.mkdtemp()
         out_path = os.path.join(tmp_dir, 'fastani.out')
+        data_dir = os.path.join(os.path.dirname(__file__), 'data')
+        test_file_1 = os.path.join(data_dir, 'shigella.fna')
+        test_file_2 = os.path.join(data_dir, 'ecoli.fna')
         args = [
             'fastANI',
-            '-q', TEST_FILE_2,
-            '-r', TEST_FILE_1,
+            '-q', test_file_1,
+            '-r', test_file_2,
             '-o', out_path
         ]
         subprocess.call(args)
@@ -106,13 +107,14 @@ class FastANITest(unittest.TestCase):
 
     def test_run_fast_ani(self):
         """
-        Test a basic call to FastANIImpl.fast_ani using a query and reference assembly
+        Test a basic call to FastANIImpl#fast_ani using a query and reference assembly
         Copy the FastANI example data into the scratch dir
         """
         a_path = os.path.join(self.scratch, 'a.fna')
         b_path = os.path.join(self.scratch, 'b.fna')
-        copyfile(TEST_FILE_1, a_path)
-        copyfile(TEST_FILE_2, b_path)
+        data_dir = os.path.join(os.path.dirname(__file__), 'data')
+        copyfile(os.path.join(data_dir, 'shigella.fna'), a_path)
+        copyfile(os.path.join(data_dir, 'ecoli.fna'), b_path)
         a_ref = self.load_fasta_file(a_path, 'test_assembly_a')
         b_ref = self.load_fasta_file(b_path, 'test_assembly_b')
         refs = [a_ref, b_ref]
@@ -123,20 +125,3 @@ class FastANITest(unittest.TestCase):
         print('Results:', results)
         self.assertTrue(len(results[0]['report_name']))
         self.assertTrue(len(results[0]['report_ref']))
-
-    # TODO test some error cases -- not sure what -- the fastANI bin doesnt have good error handling
-
-    def test_invalid_data_types(self):
-        """
-        Test invalid data types
-        """
-        # TODO
-        # query_assembly = self.load_fasta_file(a_path, 'test_query')
-        # reference_assembly = self.load_fasta_file(b_path, 'reference_assembly')
-        # results = self.getImpl().fast_ani(self.getContext(), {
-        #     'workspace_name': self.getWsName(),
-        #     'query_assembly': query_assembly,
-        #     'reference_assembly': reference_assembly
-        # })
-        # print(results)
-        # return
