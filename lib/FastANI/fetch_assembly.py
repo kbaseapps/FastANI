@@ -5,12 +5,12 @@ from AssemblyUtil.AssemblyUtilClient import AssemblyUtil
 
 
 def fetch_multiple(callback_url, refs):
-    '''
+    """
     Fetch multiple assembly files in parallel and return them in an array
     :param callback_url:
     :param refs: array of workspace references to assemblies
     :returns: array of file paths of fetched assemblies
-    '''
+    """
     assembly_util = AssemblyUtil(callback_url)
     pool = multiprocessing.Pool(processes=len(refs))
     jobs = []
@@ -20,5 +20,5 @@ def fetch_multiple(callback_url, refs):
 
 
 def fetch_assembly(assembly_util, ref):
-    # Fetch a single assembly file with a workspace reference
+    """ Fetch a single assembly file with a workspace reference """
     return assembly_util.get_assembly_as_fasta({'ref': ref})['path']

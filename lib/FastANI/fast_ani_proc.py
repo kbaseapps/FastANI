@@ -9,13 +9,13 @@ import multiprocessing
 
 
 def run_fast_ani_pairwise(scratch, paths):
-    '''
+    """
     Given a list of assembly paths, run fastANI on every pair
     Runs in parallel on each cpu
     :param scratch: string path where to put all output
     :param paths: list of paths to each assembly file (fasta format)
     :returns: array of output result paths
-    '''
+    """
     pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
     jobs = []
     for p1 in paths:
@@ -44,10 +44,10 @@ def __run_proc(scratch, path1, path2):
 
 
 def __visualize(path1, path2, out_path):
-    '''
+    """
     Given the output path for a fastANI result, build the PDF visualization file using Rscript
     $ Rscript scripts/visualize.R B_quintana.fna B_henselae.fna fastani.out.visual
-    '''
+    """
     script_path = os.path.abspath(
         os.path.join(os.path.dirname(__file__), '../../scripts/visualize.R')
     )

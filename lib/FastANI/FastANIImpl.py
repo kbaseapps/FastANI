@@ -9,13 +9,13 @@ from fast_ani_report import create_report
 
 
 class FastANI:
-    '''
+    """
     Module Name:
     FastANI
 
     Module Description:
     A KBase module: FastANI
-    '''
+    """
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/jayrbolton/kbase-fastANI.git"
     GIT_COMMIT_HASH = "c2dfe6c350b994f4d1ae04c95163473af8033487"

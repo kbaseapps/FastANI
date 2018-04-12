@@ -88,9 +88,9 @@ class FastANITest(unittest.TestCase):
         })
 
     def test_fastani_binary(self):
-        '''
+        """
         Run the compiled binary using the given example data
-        '''
+        """
         out_path = '/tmp/fastani-out.txt'
         args = [
             'fastANI',
@@ -103,10 +103,10 @@ class FastANITest(unittest.TestCase):
         return
 
     def test_run_fast_ani(self):
-        '''
+        """
         Test a basic call to FastANIImpl.fast_ani using a query and reference assembly
         Copy the FastANI example data into the scratch dir
-        '''
+        """
         a_path = os.path.join(self.scratch, 'a.fna')
         b_path = os.path.join(self.scratch, 'b.fna')
         copyfile(TEST_FILE_1, a_path)
@@ -124,15 +124,11 @@ class FastANITest(unittest.TestCase):
 
     # TODO test some error cases -- not sure what -- the fastANI bin doesnt have good error handling
 
-    def test_invalid_refs(self):
-        '''
+    def test_invalid_data_types(self):
+        """
         Test invalid data types
-        '''
-        # TODO- below test is not useful as it just throws an AssemblyUtil exception
-        # a_path = self.scratch + '/a_empty.fna'
-        # b_path = self.scratch + '/b_empty.fna'
-        # open(a_path, 'a').close()
-        # open(b_path, 'a').close()
+        """
+        # TODO
         # query_assembly = self.load_fasta_file(a_path, 'test_query')
         # reference_assembly = self.load_fasta_file(b_path, 'reference_assembly')
         # results = self.getImpl().fast_ani(self.getContext(), {

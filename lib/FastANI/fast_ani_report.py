@@ -9,9 +9,9 @@ from KBaseReport.KBaseReportClient import KBaseReport
 
 
 def create_report(callback_url, scratch, workspace_name, result_data):
-    '''
+    """
     Create KBase extended report object for the output html
-    '''
+    """
     html = create_html_tables(result_data)
     dfu = DataFileUtil(callback_url)
     report_name = 'fastANI_report_' + str(uuid.uuid4())

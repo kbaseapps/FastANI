@@ -11,9 +11,9 @@ env = Environment(
 
 
 def get_result_data(output_paths):
-    '''
+    """
     Create a list of objects of all the result data from running fastani
-    '''
+    """
     result_data = []
     for path in output_paths:
         with open(path) as file:
@@ -36,9 +36,9 @@ def get_result_data(output_paths):
 
 
 def create_file_links(result_data):
-    '''
+    """
     For each result, create a file link dict that can be used in the kbase report
-    '''
+    """
     files = []
     for result in result_data:
         path = result['viz_path']
@@ -53,9 +53,9 @@ def create_file_links(result_data):
 
 
 def create_html_tables(result_data):
-    '''
+    """
     For each result, create an html table for it
-    '''
+    """
     headers = ['Query', 'Reference', 'ANI Estimate', 'Matches',
                'Total', 'Visualization']
     template = env.get_template('result_tables.html')
