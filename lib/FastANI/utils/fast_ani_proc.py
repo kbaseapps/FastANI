@@ -49,7 +49,7 @@ def __visualize(path1, path2, out_path):
     $ Rscript scripts/visualize.R B_quintana.fna B_henselae.fna fastani.out.visual
     """
     script_path = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), '../../scripts/visualize.R')
+        os.path.join(os.path.dirname(__file__), '../../../scripts/visualize.R')
     )
     args = ['Rscript', script_path, path1, path2, out_path + '.visual']
     try:

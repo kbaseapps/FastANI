@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 #BEGIN_HEADER
 import os
-from fast_ani_proc import run_fast_ani_pairwise
-from fast_ani_output import get_result_data
-from fetch_assembly import fetch_multiple
-from fast_ani_report import create_report
+from utils.fast_ani_proc import run_fast_ani_pairwise
+from utils.fast_ani_output import get_result_data
+from utils.fetch_assembly import fetch_multiple
+from utils.fast_ani_report import create_report
 #END_HEADER
 
 

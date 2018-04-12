@@ -3,7 +3,7 @@ import os
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 env = Environment(
-    loader=PackageLoader('FastANI', 'templates'),
+    loader=PackageLoader('FastANI', 'utils/templates'),
     autoescape=select_autoescape(['html'])
 )
 

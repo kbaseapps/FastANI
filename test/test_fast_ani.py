@@ -5,8 +5,8 @@ import tempfile
 dirname = os.path.dirname(__file__)
 sys.path.insert(0, os.path.abspath(os.path.join(dirname, '../lib/FastANI/')))
 
-from fast_ani_output import get_result_data, create_html_tables  # noqa
-from fast_ani_proc import run_fast_ani_pairwise  # noqa
+from utils.fast_ani_output import get_result_data, create_html_tables  # noqa
+from utils.fast_ani_proc import run_fast_ani_pairwise  # noqa
 
 # Test the fastANI python utilites in /lib/FastANI
 
