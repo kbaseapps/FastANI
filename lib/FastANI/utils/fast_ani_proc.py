@@ -16,7 +16,9 @@ def run_fast_ani_pairwise(scratch, paths):
     :param paths: list of paths to each assembly file (fasta format)
     :returns: array of output result paths
     """
-    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
+    # We have to cap cpus at 2 so we dont overuse our container node's resources
+    # If we only have 1 cpu available, it will just run serial but threaded
+    pool = multiprocessing.Pool(processes=2)
     jobs = []
     for p1 in paths:
         for p2 in paths:
