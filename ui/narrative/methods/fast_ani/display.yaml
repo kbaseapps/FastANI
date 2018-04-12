@@ -35,4 +35,12 @@ parameters :
         long-hint: Pass in multiple references to get results for each query/reference pair
 
 description : |
-    <p>FastANI is developed for fast alignment-free computation of whole-genome Average Nucleotide Identity (ANI). ANI is defined as mean nucleotide identity of orthologous gene pairs shared between two microbial genomes. FastANI supports pairwise comparison of both complete and draft genome assemblies. Its underlying procedure follows a similar workflow as described by Goris et al. 2007. However, it avoids expensive sequence alignments and uses Mashmap as its MinHash based sequence mapping engine to compute the orthologous mappings and alignment identity estimates. Based on our experiments with complete and draft genomes, its accuracy is on par with BLAST-based ANI solver and it achieves two to three orders of magnitude speedup. Therefore, it is useful for pairwise ANI computation of large number of genome pairs. More details about its speed, accuracy and potential applications are described here: "High-throughput ANI Analysis of 90K Prokaryotic Genomes Reveals Clear Species Boundaries".</p>
+    <p>FastANI module and source code: <a href='https://github.com/ParBLiSS/FastANI' target='_blank'>https://github.com/ParBLiSS/FastANI</a></p>
+
+    <p>Related paper: <a target='_blank' href='https://www.biorxiv.org/content/early/2017/11/27/225342'>High-throughput ANI Analysis of 90K Prokaryotic Genomes Reveals Clear Species Boundaries</a></p>
+
+    <p>FastANI is developed for fast alignment-free computation of whole-genome Average Nucleotide Identity (ANI). ANI is defined as mean nucleotide identity of orthologous gene pairs shared between two microbial genomes. FastANI supports pairwise comparison of both complete and draft genome assemblies.</p>
+
+    <p>Its underlying procedure follows a similar workflow as described by Goris et al. 2007. However, it avoids expensive sequence alignments and uses Mashmap as its MinHash based sequence mapping engine to compute the orthologous mappings and alignment identity estimates. Based on our experiments with complete and draft genomes, its accuracy is on par with BLAST-based ANI solver and it achieves two to three orders of magnitude speedup.</p>
+
+    <p> Therefore, it is useful for pairwise ANI computation of large number of genome pairs. More details about its speed, accuracy and potential applications are described here: <a href='https://www.biorxiv.org/content/early/2017/11/27/22534' target='_blank'>"High-throughput ANI Analysis of 90K Prokaryotic Genomes Reveals Clear Species Boundaries"</a>.</p>
