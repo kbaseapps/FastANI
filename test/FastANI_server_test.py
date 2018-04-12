@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
-import os  # noqa: F401
-import json  # noqa: F401
+import os
 import time
-# import requests
 import subprocess
 
 from os import environ
@@ -11,8 +9,6 @@ try:
     from ConfigParser import ConfigParser  # py2
 except ImportError:
     from configparser import ConfigParser  # py3
-
-from pprint import pprint  # noqa: F401
 
 from biokbase.workspace.client import Workspace as workspaceService
 from FastANI.FastANIImpl import FastANI
@@ -123,7 +119,6 @@ class FastANITest(unittest.TestCase):
             'assembly_refs': refs
         })
         print('Results:', results)
-        # TODO can we open and check the report?
         self.assertTrue(len(results[0]['report_name']))
         self.assertTrue(len(results[0]['report_ref']))
 
