@@ -30,6 +30,12 @@ def run_fast_ani_pairwise(scratch, paths):
 
 
 def __run_proc(scratch, path1, path2):
+    """
+    :param scratch: file path of the scratch directory
+    :param path1: path for the query genome file
+    :param path2: path for the reference genome file
+    :returns: output file path
+    """
     def basename(path): return os.path.basename(path).split('.')[0]
     out_name = basename(path1) + '-' + basename(path2) + '.out'
     out_path = os.path.join(scratch, out_name)

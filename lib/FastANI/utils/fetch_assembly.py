@@ -12,7 +12,7 @@ def fetch_multiple(callback_url, refs):
     :returns: array of file paths of fetched assemblies
     """
     assembly_util = AssemblyUtil(callback_url)
-    pool = multiprocessing.Pool(processes=len(refs))
+    pool = multiprocessing.Pool(processes=2)
     jobs = []
     for ref in refs:
         jobs.append(pool.apply_async(fetch_assembly, (assembly_util, ref)))
