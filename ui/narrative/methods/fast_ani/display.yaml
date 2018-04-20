@@ -6,7 +6,7 @@ name: FastANI
 tooltip: |
     Fast Whole-Genome Similarity (ANI) Estimation
 
-screenshots: []
+screenshots: [screenshot1.png, screenshot2.png]
 
 icon: icon.png
 
