@@ -24,12 +24,12 @@ def run_fast_ani_pairwise(scratch, paths):
         for p2 in paths:
             if p1 == p2:
                 continue
-            jobs.append(pool.apply_async(__run_proc, (scratch, p1, p2)))
+            jobs.append(pool.apply_async(_run_proc, (scratch, p1, p2)))
     out_paths = [j.get() for j in jobs]
     return out_paths
 
 
-def __run_proc(scratch, path1, path2):
+def _run_proc(scratch, path1, path2):
     """
     :param scratch: file path of the scratch directory
     :param path1: path for the query genome file
@@ -41,29 +41,41 @@ def __run_proc(scratch, path1, path2):
     out_path = os.path.join(scratch, out_name)
     args = ['fastANI', '-q', path1, '-r', path2, '--visualize', '-o', out_path, '--threads', '2']
     try:
-        subprocess.Popen(args).wait()
+        _run_subprocess(args, 'fastANI')
     except OSError as err:
         print('Error running fastANI:', str(err), 'with args:', args)
         raise err
-    except:
+    except Exception:
         print('Unexpected error:', sys.exc_info()[0], 'with args:', args)
-    __visualize(path1, path2, out_path)
+    _visualize(path1, path2, out_path)
     return out_path
 
 
-def __visualize(path1, path2, out_path):
+def _visualize(path1, path2, out_path):
     """
     Given the output path for a fastANI result, build the PDF visualization file using Rscript
     $ Rscript scripts/visualize.R B_quintana.fna B_henselae.fna fastani.out.visual
     """
-    script_path = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), 'scripts', 'visualize.R')
-    )
+    r_path = os.path.join(os.path.dirname(__file__), 'scripts', 'visualize.R')
+    script_path = os.path.abspath(r_path)
     args = ['Rscript', script_path, path1, path2, out_path + '.visual']
     try:
-        subprocess.Popen(args).wait()
+        _run_subprocess(args, 'Rscript visualization')
     except OSError as err:
         print('Error running visualizer:', str(err), 'with args:', args)
         raise err
-    except:
+    except Exception:
         print('Unexpected error:', sys.exc_info()[0], 'with args:', args)
+
+
+def _run_subprocess(args, proc_name):
+    """Run a sub-process, logging stdout/err."""
+    proc = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (stdout, stderr) = proc.communicate()
+    print('=' * 80)
+    # Note that neither fastANI nor Rscript seem to make use of stdout/err properly. fastANI prints
+    # all results to stderr
+    print('Results for ' + proc_name)
+    print(stdout)
+    print(stderr)
+    print('=' * 80)

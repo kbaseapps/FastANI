@@ -3,7 +3,8 @@
 import os
 from utils.fast_ani_proc import run_fast_ani_pairwise
 from utils.fast_ani_output import get_result_data
-from utils.fetch_assembly import fetch_multiple
+# from utils.fetch_assembly import fetch_multiple
+from utils.downloader import download_fasta
 from utils.fast_ani_report import create_report
 #END_HEADER
 
@@ -59,8 +60,8 @@ class FastANI:
             params['refs'] = [params['refs']]
         ws_name = params['workspace_name']
         # Download the data
-        files = fetch_multiple(self.callback_url, params['refs'])
-        output_paths = run_fast_ani_pairwise(self.shared_folder, files)
+        paths = download_fasta(params['refs'], self.callback_url)
+        output_paths = run_fast_ani_pairwise(self.shared_folder, paths)
         result_data = get_result_data(output_paths)
         results = create_report(self.callback_url, self.shared_folder, ws_name, result_data)
         #END fast_ani

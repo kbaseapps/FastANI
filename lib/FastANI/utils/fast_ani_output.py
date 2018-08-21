@@ -19,18 +19,15 @@ def get_result_data(output_paths):
         with open(path) as file:
             contents = file.read()
             parts = contents[:-1].split("\t")
-            if len(parts) == 5:
-                result_data.append({
-                    'query_path': __filename(parts[0]),
-                    'reference_path': __filename(parts[1]),
-                    'percentage_match': parts[2],
-                    'orthologous_matches': parts[3],
-                    'total_fragments': parts[4],
-                    'viz_path': path + '.visual.pdf',
-                    'viz_filename': os.path.basename(path + '.visual.pdf')
-                })
-            else:
-                print('Invalid result:', contents)
+            result_data.append({
+                'query_path': __filename(parts[0]),
+                'reference_path': __filename(parts[1]),
+                'percentage_match': parts[2],
+                'orthologous_matches': parts[3],
+                'total_fragments': parts[4],
+                'viz_path': path + '.visual.pdf',
+                'viz_filename': os.path.basename(path) + '.visual.pdf'
+            })
     result_data = sorted(result_data, key=lambda r: float(r['percentage_match']))
     return result_data
 
