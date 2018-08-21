@@ -18,7 +18,7 @@ def get_result_data(output_paths):
     for path in output_paths:
         with open(path) as file:
             contents = file.read()
-            parts = contents[:-1].split(" ")
+            parts = contents[:-1].split("\t")
             if len(parts) == 5:
                 result_data.append({
                     'query_path': __filename(parts[0]),

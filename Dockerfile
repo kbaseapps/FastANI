@@ -6,15 +6,13 @@ MAINTAINER Jay R Bolton <jrbolton@lbl.gov>
 
 RUN apt-get update
 
+ENV FASTANI_URL="https://github.com/ParBLiSS/FastANI/releases/download/v1.1/fastani-Linux64-v1.1.zip"
+
 # Fetch and compile FastANI
-RUN git clone https://github.com/ParBLiSS/FastANI.git /opt/FastANI \
-    && cd /opt/FastANI \
-    && git checkout tags/v1.0 -b v1.0 \
-    && ./bootstrap.sh \
-    && ./configure \
-    && make \
-    # Place fastANI in the PATH for this user
-    && ln -s $(readlink -f ./fastANI) /usr/local/bin/fastANI
+RUN curl $FASTANI_URL -L --output /opt/fastani.zip && \
+    unzip /opt/fastani.zip -d /opt && \
+    rm /opt/fastani.zip && \
+    ln -s /opt/fastANI /usr/local/bin/fastANI
 
 # R and genoPlotR are required for fastANI visualization
 RUN apt-get install -y r-base \
