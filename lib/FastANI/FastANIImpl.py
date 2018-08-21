@@ -9,16 +9,23 @@ from utils.fast_ani_report import create_report
 
 
 class FastANI:
-    """
+    '''
     Module Name:
     FastANI
 
     Module Description:
     A KBase module: FastANI
-    """
+    '''
+
+    ######## WARNING FOR GEVENT USERS ####### noqa
+    # Since asynchronous IO can lead to methods - even the same method -
+    # interrupting each other, you must be *very* careful when using global
+    # state. A method could easily clobber the state set by another while
+    # the latter method is running.
+    ######################################### noqa
     VERSION = "0.0.1"
-    GIT_URL = "https://github.com/jayrbolton/kbase-fastANI.git"
-    GIT_COMMIT_HASH = "c2dfe6c350b994f4d1ae04c95163473af8033487"
+    GIT_URL = "https://github.com/kbaseapps/FastANI"
+    GIT_COMMIT_HASH = "76086c6c7c1b7c2cb7c592b1a58bbc4d555c4bba"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -30,14 +37,14 @@ class FastANI:
         self.callback_url = os.environ['SDK_CALLBACK_URL']
         self.shared_folder = config['scratch']
         #END_CONSTRUCTOR
-        return
+        pass
+
 
     def fast_ani(self, ctx, params):
         """
         :param params: instance of type "FastANIParams" (fast_ani input) ->
-           structure: parameter "workspace_name" of String, parameter
-           "query_assembly_refs" of list of String, parameter
-           "reference_assembly_refs" of list of String
+           structure: parameter "workspace_name" of String, parameter "refs"
+           of list of type "workspace_ref"
         :returns: instance of type "FastANIResults" (fast_ani output) ->
            structure: parameter "report_name" of String, parameter
            "report_ref" of String
@@ -46,20 +53,24 @@ class FastANI:
         # return variables are: results
         #BEGIN fast_ani
         print('Starting FastANI function and validating parameters.')
-        for name in ['workspace_name', 'assembly_refs']:
-            if name not in params:
-                raise ValueError('Parameter "' + name + '" is not set in input arguments')
-        if isinstance(params['assembly_refs'], basestring):
-            params['assembly_refs'] = [params['assembly_refs']]
+        assert params.get('workspace_name'), 'Must pass a non-empty `workspace_name` arg.'
+        assert params.get('refs'), 'Must pass a non-empty workspace `refs` list.'
+        if isinstance(params['refs'], basestring):
+            params['refs'] = [params['refs']]
         ws_name = params['workspace_name']
-        # Download the assembly data
-        files = fetch_multiple(self.callback_url, params['assembly_refs'])
+        # Download the data
+        files = fetch_multiple(self.callback_url, params['refs'])
         output_paths = run_fast_ani_pairwise(self.shared_folder, files)
         result_data = get_result_data(output_paths)
         results = create_report(self.callback_url, self.shared_folder, ws_name, result_data)
         #END fast_ani
-        return [results]
 
+        # At some point might do deeper type checking...
+        if not isinstance(results, dict):
+            raise ValueError('Method fast_ani return value ' +
+                             'results is not type dict as required.')
+        # return the results
+        return [results]
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",

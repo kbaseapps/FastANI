@@ -3,13 +3,12 @@
  */
 
 module FastANI {
-    /* @id ws KBaseGenomeAnnotations.Assembly */
     typedef string workspace_ref;
 
     /* fast_ani input */
     typedef structure {
         string workspace_name;
-        list<workspace_ref> assembly_refs;
+        list<workspace_ref> refs;
     } FastANIParams;
 
     /* fast_ani output */

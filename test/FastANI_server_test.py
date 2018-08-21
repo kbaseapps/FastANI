@@ -120,7 +120,7 @@ class FastANITest(unittest.TestCase):
         refs = [a_ref, b_ref]
         results = self.getImpl().fast_ani(self.getContext(), {
             'workspace_name': self.getWsName(),
-            'assembly_refs': refs
+            'refs': refs
         })
         print('Results:', results)
         self.assertTrue(len(results[0]['report_name']))
