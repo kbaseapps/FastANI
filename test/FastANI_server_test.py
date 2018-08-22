@@ -107,21 +107,17 @@ class FastANITest(unittest.TestCase):
 
     def test_run_fast_ani(self):
         """
-        Test a basic call to FastANIImpl#fast_ani using a query and reference assembly
-        Copy the FastANI example data into the scratch dir
+        Test a run of the full FastANIImpl function using several assembly/genome refs.
         """
-        a_path = os.path.join(self.scratch, 'a.fna')
-        b_path = os.path.join(self.scratch, 'b.fna')
-        data_dir = os.path.join(os.path.dirname(__file__), 'data')
-        copyfile(os.path.join(data_dir, 'shigella.fna'), a_path)
-        copyfile(os.path.join(data_dir, 'ecoli.fna'), b_path)
-        a_ref = self.load_fasta_file(a_path, 'test_assembly_a')
-        b_ref = self.load_fasta_file(b_path, 'test_assembly_b')
-        refs = [a_ref, b_ref]
+        assembly_id1 = '34819/10/1'
+        genome_id1 = '34819/14/1'
+        genome_id2 = '34819/13/1'
+        genome_id3 = '34819/3/2'
+        refs = [assembly_id1, genome_id1, genome_id2, genome_id3]
         results = self.getImpl().fast_ani(self.getContext(), {
             'workspace_name': self.getWsName(),
-            'assembly_refs': refs
+            'refs': refs
         })
-        print('Results:', results)
+        # print('Results:', results)
         self.assertTrue(len(results[0]['report_name']))
         self.assertTrue(len(results[0]['report_ref']))

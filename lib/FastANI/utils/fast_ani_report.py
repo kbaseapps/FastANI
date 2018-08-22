@@ -20,7 +20,8 @@ def create_report(callback_url, scratch, workspace_name, result_data):
     os.mkdir(html_dir)
     # Move all pdfs into the html directory
     for result in result_data:
-        os.rename(result['viz_path'], os.path.join(html_dir, result['viz_filename']))
+        if os.path.exists(result['viz_path']):
+            os.rename(result['viz_path'], os.path.join(html_dir, result['viz_filename']))
     with open(os.path.join(html_dir, "index.html"), 'w') as file:
         file.write(html)
     shock = dfu.file_to_shock({
