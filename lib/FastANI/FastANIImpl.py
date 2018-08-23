@@ -54,8 +54,12 @@ class FastANI:
         # return variables are: results
         #BEGIN fast_ani
         print('Starting FastANI function and validating parameters.')
-        assert params.get('workspace_name'), 'Must pass a non-empty `workspace_name` arg.'
-        assert params.get('refs'), 'Must pass a non-empty workspace `refs` list.'
+        if not params.get('workspace_name'):
+            print('Parameters provided were', str(params))
+            raise TypeError('Must pass a non-empty `workspace_name` arg.')
+        if not params.get('refs'):
+            print('Parameters provided were', str(params))
+            raise TypeError('Must pass a non-empty `workspace_name` arg.')
         if isinstance(params['refs'], basestring):
             params['refs'] = [params['refs']]
         ws_name = params['workspace_name']
