@@ -10,11 +10,21 @@ screenshots: [screenshot1.png, screenshot2.png]
 
 icon: icon.png
 
-publications:
-    - display-text: High-throughput ANI Analysis of 90K Prokaryotic Genomes Reveals Clear Species Boundaries
-      link: https://doi.org/10.1101/225342
-    - display-text: DNA-DNA hybridization values and their relationship to whole-genome sequence similarities.
-      link: https://www.ncbi.nlm.nih.gov/pubmed/17220447
+publications :
+    -
+        display-text: |
+            Jain C, Rodriguez-R LM, Phillippy AM, Konstantinidis KT, Aluru S. High-throughput ANI Analysis of 90K Prokaryotic Genomes Reveals Clear Species Boundaries. 2017; doi:10.1101/225342
+        link: https://doi.org/10.1101/225342
+
+    -
+        display-text: |
+            Goris J, Konstantinidis KT, Klappenbach JA, Coenye T, Vandamme P, Tiedje JM. DNA-DNA hybridization values and their relationship to whole-genome sequence similarities. Int J Syst Evol Microbiol. 2007;57: 81–91. doi:10.1099/ijs.0.64483-0
+        link: https://www.ncbi.nlm.nih.gov/pubmed/17220447
+
+    -
+        display-text: |
+            "FastANI module and source code: "
+        link: https://github.com/ParBLiSS/FastANI
 
 #
 # define a set of similar methods that might be useful to the user
@@ -41,10 +51,6 @@ parameters :
         long-hint: Pass in multiple references to get results for each query/reference pair
 
 description : |
-    <p>FastANI module and source code: <a href='https://github.com/ParBLiSS/FastANI' target='_blank'>https://github.com/ParBLiSS/FastANI</a></p>
-
-    <p>Related publication: <a target='_blank' href='https://www.biorxiv.org/content/early/2017/11/27/225342'> Chirag Jain, Luis M. Rodriguez-R, Adam M. Phillippy, Konstantinos T. Konstantinidis, Srinivas Aluru. High-throughput ANI Analysis of 90K Prokaryotic Genomes Reveals Clear Species Boundaries. November 27, 2017.</a></p>
-
     <p>FastANI is developed for fast alignment-free computation of whole-genome Average Nucleotide Identity (ANI). ANI is defined as mean nucleotide identity of orthologous gene pairs shared between two microbial genomes. FastANI supports pairwise comparison of both complete and draft genome assemblies.</p>
 
     <p>Its underlying procedure follows a similar workflow as described by Goris et al. 2007. However, it avoids expensive sequence alignments and uses Mashmap as its MinHash based sequence mapping engine to compute the orthologous mappings and alignment identity estimates. Based on our experiments with complete and draft genomes, its accuracy is on par with BLAST-based ANI solver and it achieves two to three orders of magnitude speedup.</p>
