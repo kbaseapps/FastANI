@@ -43,10 +43,10 @@ def _run_proc(scratch, path1, path2):
     try:
         _run_subprocess(args, 'fastANI')
     except OSError as err:
-        print('Error running fastANI:', str(err), 'with args:', args)
+        print(('Error running fastANI:', str(err), 'with args:', args))
         raise err
     except Exception:
-        print('Unexpected error:', sys.exc_info()[0], 'with args:', args)
+        print(('Unexpected error:', sys.exc_info()[0], 'with args:', args))
     _visualize(path1, path2, out_path)
     return out_path
 
@@ -62,20 +62,20 @@ def _visualize(path1, path2, out_path):
     try:
         _run_subprocess(args, 'Rscript visualization')
     except OSError as err:
-        print('Error running visualizer:', str(err), 'with args:', args)
+        print(('Error running visualizer:', str(err), 'with args:', args))
         raise err
     except Exception:
-        print('Unexpected error:', sys.exc_info()[0], 'with args:', args)
+        print(('Unexpected error:', sys.exc_info()[0], 'with args:', args))
 
 
 def _run_subprocess(args, proc_name):
     """Run a sub-process, logging stdout/err."""
     proc = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (stdout, stderr) = proc.communicate()
-    print('=' * 80)
+    print(('=' * 80))
     # Note that neither fastANI nor Rscript seem to make use of stdout/err properly. fastANI prints
     # all results to stderr
-    print('Results for ' + proc_name)
+    print(('Results for ' + proc_name))
     print(stdout)
     print(stderr)
-    print('=' * 80)
+    print(('=' * 80))

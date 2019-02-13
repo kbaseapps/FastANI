@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
 import uuid
-from fast_ani_output import create_html_tables
-from DataFileUtil.DataFileUtilClient import DataFileUtil
-from KBaseReport.KBaseReportClient import KBaseReport
+from .fast_ani_output import create_html_tables
+from installed_clients.DataFileUtilClient import DataFileUtil
+from installed_clients.KBaseReportClient import KBaseReport
 
 # This module handles creating a KBase report object from fast_ani_output html
 

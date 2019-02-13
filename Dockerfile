@@ -1,4 +1,4 @@
-FROM kbase/kbase:sdkbase2.latest
+FROM kbase/sdkbase2:python
 MAINTAINER Jay R Bolton <jrbolton@lbl.gov>
 
 # -----------------------------------------
@@ -18,10 +18,7 @@ RUN curl $FASTANI_URL -L --output /opt/fastani.zip && \
 RUN apt-get install -y r-base \
     && Rscript -e "install.packages('genoPlotR', repos='http://cran.us.r-project.org')"
 
-# Update security deps
 RUN pip install -U pip
-RUN pip install --upgrade \
-    cffi pyopenssl ndg-httpsclient pyasn1 requests 'requests[security]'
 
 # Install pip deps
 COPY requirements.txt /kb/module/requirements.txt
