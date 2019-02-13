@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 #BEGIN_HEADER
 import os
-from utils.fast_ani_proc import run_fast_ani_pairwise
-from utils.fast_ani_output import get_result_data
+from .utils.fast_ani_proc import run_fast_ani_pairwise
+from .utils.fast_ani_output import get_result_data
 # from utils.fetch_assembly import fetch_multiple
-from utils.downloader import download_fasta
-from utils.fast_ani_report import create_report
+from .utils.downloader import download_fasta
+from .utils.fast_ani_report import create_report
 #END_HEADER
 
 
@@ -60,7 +60,7 @@ class FastANI:
         if not params.get('refs'):
             print('Parameters provided were', str(params))
             raise TypeError('Must pass a non-empty `workspace_name` arg.')
-        if isinstance(params['refs'], basestring):
+        if isinstance(params['refs'], str):
             params['refs'] = [params['refs']]
         ws_name = params['workspace_name']
         # Download the data

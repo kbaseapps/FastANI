@@ -1,8 +1,8 @@
 """
 Download either a Genome or Assembly.
 """
-from DataFileUtil.DataFileUtilClient import DataFileUtil
-from AssemblyUtil.AssemblyUtilClient import AssemblyUtil
+from installed_clients.DataFileUtilClient import DataFileUtil
+from installed_clients.AssemblyUtilClient import AssemblyUtil
 
 
 def download_fasta(refs, cb_url):

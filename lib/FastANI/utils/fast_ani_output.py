@@ -30,7 +30,7 @@ def get_result_data(output_paths):
                     'viz_filename': os.path.basename(path) + '.visual.pdf'
                 })
             else:
-                print('Invalid results from fastANI: ' + contents)
+                print(('Invalid results from fastANI: ' + contents))
     result_data = sorted(result_data, key=lambda r: float(r['percentage_match']))
     return result_data
 
