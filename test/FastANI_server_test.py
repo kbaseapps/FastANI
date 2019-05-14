@@ -1,23 +1,17 @@
 # -*- coding: utf-8 -*-
-import unittest
 import os
-import time
 import subprocess
 import tempfile
-
+import time
+import unittest
+from configparser import ConfigParser  # py3
 from os import environ
-try:
-    from ConfigParser import ConfigParser  # py2
-except ImportError:
-    from configparser import ConfigParser  # py3
 
-from biokbase.workspace.client import Workspace as workspaceService
 from FastANI.FastANIImpl import FastANI
 from FastANI.FastANIServer import MethodContext
 from FastANI.authclient import KBaseAuth as _KBaseAuth
-
-from AssemblyUtil.AssemblyUtilClient import AssemblyUtil
-from shutil import copyfile
+from installed_clients.AssemblyUtilClient import AssemblyUtil
+from installed_clients.WorkspaceClient import Workspace as workspaceService
 
 
 class FastANITest(unittest.TestCase):
