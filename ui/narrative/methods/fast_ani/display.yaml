@@ -1,10 +1,10 @@
 #
 # define display information
 #
-name: FastANI
+name: Compute ANI with FastANI
 
 tooltip: |
-    Fast Whole-Genome Similarity (ANI) Estimation
+    Allows users to compute fast whole-genome Average Nucleotide Identity (ANI) estimation.
 
 screenshots: [screenshot1.png, screenshot2.png]
 
@@ -13,17 +13,17 @@ icon: icon.png
 publications :
     -
         display-text: |
-            Jain C, Rodriguez-R LM, Phillippy AM, Konstantinidis KT, Aluru S. High-throughput ANI Analysis of 90K Prokaryotic Genomes Reveals Clear Species Boundaries. 2017; doi:10.1101/225342
+            [1] Jain C, Rodriguez-R LM, Phillippy AM, Konstantinidis KT, Aluru S. High-throughput ANI Analysis of 90K Prokaryotic Genomes Reveals Clear Species Boundaries. 2017; doi:10.1101/225342
         link: https://doi.org/10.1101/225342
 
     -
         display-text: |
-            Goris J, Konstantinidis KT, Klappenbach JA, Coenye T, Vandamme P, Tiedje JM. DNA-DNA hybridization values and their relationship to whole-genome sequence similarities. Int J Syst Evol Microbiol. 2007;57: 81–91. doi:10.1099/ijs.0.64483-0
+            [2] Goris J, Konstantinidis KT, Klappenbach JA, Coenye T, Vandamme P, Tiedje JM. DNA-DNA hybridization values and their relationship to whole-genome sequence similarities. Int J Syst Evol Microbiol. 2007;57: 81–91. doi:10.1099/ijs.0.64483-0
         link: https://www.ncbi.nlm.nih.gov/pubmed/17220447
 
     -
         display-text: |
-            "FastANI module and source code: "
+            FastANI module and source code:
         link: https://github.com/ParBLiSS/FastANI
 
 #
@@ -46,17 +46,14 @@ suggestions:
 #
 parameters :
     refs:
-        ui-name: Assemblies/Genomes to reference
-        short-hint: Assembly/genome to pass as the reference parameter to FastANI. Can be multiple objects.
-        long-hint: Pass in multiple references to get results for each query/reference pair
+        ui-name: Assemblies or Genomes
+        short-hint: Assemblies or genomes for computing ANI values in reference to each other. Input multiple assemblies or genomes to get results for each possible query/reference pair in the set.
 
 description : |
-    <p>FastANI is developed for fast alignment-free computation of whole-genome Average Nucleotide Identity (ANI). ANI is defined as mean nucleotide identity of orthologous gene pairs shared between two microbial genomes. FastANI supports pairwise comparison of both complete and draft genome assemblies.</p>
+    <p>This is a KBase wrapper for <a href=”https://github.com/ParBLiSS/FastANI”>FastANI</a>, which performs fast, alignment-free computation of whole-genome Average Nucleotide Identity (ANI). ANI is defined as mean nucleotide identity of orthologous gene pairs shared between two microbial genomes. A common use of computing ANI values for assemblies would be to compare a binned assembly from a metagenome against a reference isolate to check if it is the same species as the reference isolate (>=95% ANI).  In KBase, FastANI supports pairwise comparison of both complete genomes and draft genome assemblies as input. The App generates a report with the ANI values, with a PDF containing a visualization of the pairwise comparison.</p>
 
-    <p>Its underlying procedure follows a similar workflow as described by Goris et al. 2007. However, it avoids expensive sequence alignments and uses Mashmap as its MinHash based sequence mapping engine to compute the orthologous mappings and alignment identity estimates. Based on our experiments with complete and draft genomes, its accuracy is on par with BLAST-based ANI solver and it achieves two to three orders of magnitude speedup.</p>
+    <p>FastANI produces accurate ANI estimates and is faster than alignment (e.g., BLAST)- based approaches. ANI values around 95% represent an accurate threshold for demarcating species for prokaryotes [1].</p>
 
-    <p> Therefore, it is useful for pairwise ANI computation of large number of genome pairs. More details about its speed, accuracy and potential applications are described here: <a href='https://www.biorxiv.org/content/early/2017/11/27/22534' target='_blank'>"High-throughput ANI Analysis of 90K Prokaryotic Genomes Reveals Clear Species Boundaries"</a>.</p>
+    <p>While its underlying procedure is similar to a previously described workflow [2], it avoids expensive sequence alignments and uses Mashmap as its MinHash based sequence mapping engine to compute the orthologous mappings and alignment identity estimates. Based on our experiments with complete and draft genomes, its accuracy is on par with a BLAST-based ANI solver and it achieves two to three orders of magnitude speedup. Therefore, it is useful for pairwise ANI computation of large number of genome pairs.</p>
 
-    <p><em>Paper abstract:</em> A fundamental question in microbiology is whether there is a continuum of genetic diversity among genomes or clear species boundaries prevail instead. Answering this question requires robust measurement of whole-genome relatedness among thousands of genomes and from diverge phylogenetic lineages. Whole-genome similarity metrics such as Average Nucleotide Identity (ANI) can provide the resolution needed for this task, overcoming several limitations of traditional techniques used for the same purposes. Although the number of genomes currently available may be adequate, the associated bioinformatics tools for analysis are lagging behind these developments and cannot scale to large datasets. Here, we present a new method, FastANI, to compute ANI using alignmentfree approximate sequence mapping. Our analyses demonstrate that FastANI produces an accurate ANI estimate and is up to three orders of magnitude faster when compared to an alignment (e.g., BLAST)- based approach. We leverage FastANI to compute pairwise ANI values among all prokaryotic genomes available in the NCBI database. Our results reveal a clear genetic discontinuity among the database genomes, with 99.8% of the total 8 billion genome pairs analyzed showing either >95% intra-species ANI or <83% inter-species ANI values. We further show that this discontinuity is recovered with or without the most frequently represented species in the database and is robust to historic additions in the public genome databases. Therefore, 95% ANI represents an accurate threshold for demarcating almost all currently named prokaryotic species, and wide species boundaries may exist for prokaryotes.</p>
-
-    <p><b>NOTE:</b> No ANI output is reported for a genome pair if ANI value is much below 80%. Such case should be computed at amino acid level.</p>
+    <p><b>NOTE:</b> No ANI output is reported for a genome pair if the ANI value is significantly below 80%. Such a case should be computed at the amino acid level.</p>
