@@ -1,0 +1,6 @@
+/kb/module/data/D4/Ba_Sterne_NC_005945.LargeContigs.fna
+/kb/module/data/D4/Ba_Sterne_NZ_CP009541.LargeContigs.fna
+/kb/module/data/D4/Ba_SVA11_NZ_CP006742.LargeContigs.fna
+/kb/module/data/D4/Ba_Turkey32_NZ_CP009315.LargeContigs.fna
+/kb/module/data/D4/Ba_V770_NP_1R_NZ_CP009598.LargeContigs.fna
+/kb/module/data/D4/Ba_Vollum_NZ_CP007666.LargeContigs.fna

@@ -21,27 +21,24 @@ def create_report(callback_url, scratch, workspace_name, result_data):
     # Move all pdfs into the html directory
     for result in result_data:
         if os.path.exists(result['viz_path']):
-            os.rename(result['viz_path'], os.path.join(html_dir, result['viz_filename']))
-    with open(os.path.join(html_dir, "index.html"), 'w') as file:
+            os.rename(
+                result['viz_path'], os.path.join(html_dir, result['viz_filename'])
+            )
+    with open(os.path.join(html_dir, 'index.html'), 'w') as file:
         file.write(html)
-    shock = dfu.file_to_shock({
-        'file_path': html_dir,
-        'make_handle': 0,
-        'pack': 'zip'
-    })
+    shock = dfu.file_to_shock({'file_path': html_dir, 'make_handle': 0, 'pack': 'zip'})
     html_file = {
         'shock_id': shock['shock_id'],
         'name': 'index.html',
         'label': 'html_files',
-        'description': 'FastANI HTML report'
+        'description': 'FastANI HTML report',
     }
-    report = report_client.create_extended_report({
-        'direct_html_link_index': 0,
-        'html_links': [html_file],
-        'report_object_name': report_name,
-        'workspace_name': workspace_name
-    })
-    return {
-        'report_name': report['name'],
-        'report_ref': report['ref']
-    }
+    report = report_client.create_extended_report(
+        {
+            'direct_html_link_index': 0,
+            'html_links': [html_file],
+            'report_object_name': report_name,
+            'workspace_name': workspace_name,
+        }
+    )
+    return {'report_name': report['name'], 'report_ref': report['ref']}

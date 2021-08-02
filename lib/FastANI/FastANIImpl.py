@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #BEGIN_HEADER
 import os
-from .utils.fast_ani_proc import run_fast_ani_pairwise
+from .utils.fast_ani_proc import run_fast_ani
 from .utils.fast_ani_output import get_result_data
-# from utils.fetch_assembly import fetch_multiple
 from .utils.downloader import download_fasta
 from .utils.fast_ani_report import create_report
 #END_HEADER
@@ -24,9 +23,9 @@ class FastANI:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "0.0.1"
-    GIT_URL = "https://github.com/kbaseapps/FastANI"
-    GIT_COMMIT_HASH = "76086c6c7c1b7c2cb7c592b1a58bbc4d555c4bba"
+    VERSION = "0.1.2"
+    GIT_URL = "https://github.com/kbaseapps/FastANI.git"
+    GIT_COMMIT_HASH = "6b8449884055b99090887a23cd0aafffd5770a6f"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -44,8 +43,9 @@ class FastANI:
     def fast_ani(self, ctx, params):
         """
         :param params: instance of type "FastANIParams" (fast_ani input) ->
-           structure: parameter "workspace_name" of String, parameter "refs"
-           of list of type "workspace_ref"
+           structure: parameter "workspace_name" of String, parameter
+           "reference" of list of type "workspace_ref", parameter "query" of
+           list of type "workspace_ref"
         :returns: instance of type "FastANIResults" (fast_ani output) ->
            structure: parameter "report_name" of String, parameter
            "report_ref" of String
@@ -57,17 +57,22 @@ class FastANI:
         if not params.get('workspace_name'):
             print('Parameters provided were', str(params))
             raise TypeError('Must pass a non-empty `workspace_name` arg.')
-        if not params.get('refs'):
-            print('Parameters provided were', str(params))
-            raise TypeError('Must pass a non-empty `workspace_name` arg.')
-        if isinstance(params['refs'], str):
-            params['refs'] = [params['refs']]
+
+        for p in ['query', 'reference']:
+            if not params.get(p) or params[p] == '' or params[p] == []:
+                print('Parameters provided were', str(params))
+                raise TypeError('Must pass both `query` and `reference` sequences.')
+            if isinstance(params[p], str):
+                params[p] = [params[p]]
+
         ws_name = params['workspace_name']
         # Download the data
-        paths = download_fasta(params['refs'], self.callback_url)
-        output_paths = run_fast_ani_pairwise(self.shared_folder, paths)
+        paths = download_fasta(params, self.shared_folder, self.callback_url)
+        output_paths = run_fast_ani(self.shared_folder, paths)
         result_data = get_result_data(output_paths)
-        results = create_report(self.callback_url, self.shared_folder, ws_name, result_data)
+        results = create_report(
+            self.callback_url, self.shared_folder, ws_name, result_data
+        )
         #END fast_ani
 
         # At some point might do deeper type checking...
@@ -78,10 +83,12 @@ class FastANI:
         return [results]
     def status(self, ctx):
         #BEGIN_STATUS
-        returnVal = {'state': "OK",
-                     'message': "",
-                     'version': self.VERSION,
-                     'git_url': self.GIT_URL,
-                     'git_commit_hash': self.GIT_COMMIT_HASH}
+        returnVal = {
+            'state': 'OK',
+            'message': '',
+            'version': self.VERSION,
+            'git_url': self.GIT_URL,
+            'git_commit_hash': self.GIT_COMMIT_HASH,
+        }
         #END_STATUS
         return [returnVal]

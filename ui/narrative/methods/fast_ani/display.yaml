@@ -45,9 +45,12 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    refs:
-        ui-name: Assemblies or Genomes
-        short-hint: Assemblies or genomes for computing ANI values in reference to each other. Input multiple assemblies or genomes to get results for each possible query/reference pair in the set.
+    query:
+        ui-name: Query sequence(s)
+        short-hint: Query assemblies or genomes for computing ANI values against the reference sequences supplied. Comparisons may be one query to one reference sequence, one query to many reference sequences, or many query sequences against many reference sequences.
+    reference:
+        ui-name: Reference sequence(s)
+        short-hint: Reference assemblies or genomes for computing ANI values of the query sequence(s) against. Comparisons may be one query to one reference sequence, one query to many reference sequences, or many query sequences against many reference sequences.
 
 description : |
     <p>This is a KBase wrapper for <a href=”https://github.com/ParBLiSS/FastANI”>FastANI</a>, which performs fast, alignment-free computation of whole-genome Average Nucleotide Identity (ANI). ANI is defined as mean nucleotide identity of orthologous gene pairs shared between two microbial genomes. A common use of computing ANI values for assemblies would be to compare a binned assembly from a metagenome against a reference isolate to check if it is the same species as the reference isolate (>=95% ANI).  In KBase, FastANI supports pairwise comparison of both complete genomes and draft genome assemblies as input. The App generates a report with the ANI values, with a PDF containing a visualization of the pairwise comparison.</p>

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import subprocess
 import tempfile
@@ -15,7 +14,6 @@ from installed_clients.WorkspaceClient import Workspace as workspaceService
 
 
 class FastANITest(unittest.TestCase):
-
     @classmethod
     def setUpClass(cls):
         token = environ.get('KB_AUTH_TOKEN', None)
@@ -32,14 +30,20 @@ class FastANITest(unittest.TestCase):
         # WARNING: don't call any logging methods on the context object,
         # it'll result in a NoneType error
         cls.ctx = MethodContext(None)
-        cls.ctx.update({'token': token,
-                        'user_id': user_id,
-                        'provenance': [
-                            {'service': 'FastANI',
-                             'method': 'please_never_use_it_in_production',
-                             'method_params': []
-                             }],
-                        'authenticated': 1})
+        cls.ctx.update(
+            {
+                'token': token,
+                'user_id': user_id,
+                'provenance': [
+                    {
+                        'service': 'FastANI',
+                        'method': 'please_never_use_it_in_production',
+                        'method_params': [],
+                    }
+                ],
+                'authenticated': 1,
+            }
+        )
         cls.wsURL = cls.cfg['workspace-url']
         cls.wsClient = workspaceService(cls.wsURL)
         cls.serviceImpl = FastANI(cls.cfg)
@@ -59,7 +63,7 @@ class FastANITest(unittest.TestCase):
         if hasattr(self.__class__, 'wsName'):
             return self.__class__.wsName
         suffix = int(time.time() * 1000)
-        wsName = "test_FastANI_" + str(suffix)
+        wsName = 'test_FastANI_' + str(suffix)
         ret = self.getWsClient().create_workspace({'workspace': wsName})  # noqa
         self.__class__.wsName = wsName
         return wsName
@@ -72,11 +76,13 @@ class FastANITest(unittest.TestCase):
 
     def load_fasta_file(self, path, name):
         assembly_util = AssemblyUtil(self.callback_url)
-        return assembly_util.save_assembly_from_fasta({
-            'file': {'path': path},
-            'workspace_name': self.getWsName(),
-            'assembly_name': name
-        })
+        return assembly_util.save_assembly_from_fasta(
+            {
+                'file': {'path': path},
+                'workspace_name': self.getWsName(),
+                'assembly_name': name,
+            }
+        )
 
     def test_fastani_binary(self):
         """
@@ -89,29 +95,28 @@ class FastANITest(unittest.TestCase):
         data_dir = os.path.join(os.path.dirname(__file__), 'data')
         test_file_1 = os.path.join(data_dir, 'shigella.fna')
         test_file_2 = os.path.join(data_dir, 'ecoli.fna')
-        args = [
-            'fastANI',
-            '-q', test_file_1,
-            '-r', test_file_2,
-            '-o', out_path
-        ]
+        args = ['fastANI', '-q', test_file_1, '-r', test_file_2, '-o', out_path]
         subprocess.call(args)
         self.assertTrue(os.path.isfile(out_path))
-        return
 
     def test_run_fast_ani(self):
         """
         Test a run of the full FastANIImpl function using several assembly/genome refs.
         """
+
+        # CANNOT BE RUN -- ws is deleted/inaccessible?
         assembly_id1 = '34819/10/1'
         genome_id1 = '34819/14/1'
         genome_id2 = '34819/13/1'
         genome_id3 = '34819/3/2'
-        refs = [assembly_id1, genome_id1, genome_id2, genome_id3]
-        results = self.getImpl().fast_ani(self.getContext(), {
-            'workspace_name': self.getWsName(),
-            'refs': refs
-        })
-        # print('Results:', results)
+        results = self.getImpl().fast_ani(
+            self.getContext(),
+            {
+                'workspace_name': self.getWsName(),
+                'reference': [assembly_id1, genome_id1],
+                'query': [genome_id2, genome_id3],
+            },
+        )
+        print('Results:', results)
         self.assertTrue(len(results[0]['report_name']))
         self.assertTrue(len(results[0]['report_ref']))

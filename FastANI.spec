@@ -8,7 +8,8 @@ module FastANI {
     /* fast_ani input */
     typedef structure {
         string workspace_name;
-        list<workspace_ref> refs;
+        list<workspace_ref> reference;
+        list<workspace_ref> query;
     } FastANIParams;
 
     /* fast_ani output */
