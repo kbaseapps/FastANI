@@ -6,6 +6,11 @@ A [KBase](https://kbase.us) module using the [KBase SDK](https://github.com/kbas
 
 This project uses Jinja2 for templating html/css. You can install pip dependencies locally with pipenv and the Pipfile
 
+## kb-sdk test
+
+Note that `kb-sdk test` must be run against the CI environment, which has a hard coded
+public workspace containing test data.
+
 ## Manual tests
 
 I have some manual unit tests that bypass the kb-sdk workflow to support TDD. To get these to run:

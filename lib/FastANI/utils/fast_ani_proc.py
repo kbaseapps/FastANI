@@ -36,8 +36,7 @@ def _run_proc(scratch, path1, path2):
     :param path2: path for the reference genome file
     :returns: output file path
     """
-    def basename(path): return os.path.basename(path).split('.')[0]
-    out_name = basename(path1) + '-' + basename(path2) + '.out'
+    out_name = os.path.basename(path1) + '-' + os.path.basename(path2) + '.out'
     out_path = os.path.join(scratch, out_name)
     args = ['fastANI', '-q', path1, '-r', path2, '--visualize', '-o', out_path, '--threads', '2']
     try:
