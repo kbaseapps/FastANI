@@ -66,7 +66,7 @@ class FastANI:
         # Download the data
         paths = download_fasta(params['refs'], self.callback_url)
         output_paths = run_fast_ani_pairwise(self.shared_folder, paths)
-        result_data = get_result_data(output_paths)
+        result_data = get_result_data(output_paths, debug=True)
         results = create_report(self.callback_url, self.shared_folder, ws_name, result_data)
         #END fast_ani
 

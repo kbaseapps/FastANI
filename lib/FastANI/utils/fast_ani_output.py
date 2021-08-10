@@ -10,7 +10,7 @@ env = Environment(
 # Construct some pretty-ish output for FastANI
 
 
-def get_result_data(output_paths):
+def get_result_data(output_paths, debug=False):
     """
     Create a list of objects of all the result data from running fastani
     """
@@ -29,6 +29,9 @@ def get_result_data(output_paths):
                     'viz_path': path + '.visual.pdf',
                     'viz_filename': os.path.basename(path) + '.visual.pdf'
                 })
+                if debug:
+                    print("=" * 8  + " " + path + " " + "=" * 8)
+                    print(result_data[-1])
             else:
                 print(('Invalid results from fastANI: ' + contents))
     result_data = sorted(result_data, key=lambda r: float(r['percentage_match']))
