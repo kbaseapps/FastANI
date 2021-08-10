@@ -18,12 +18,16 @@ def download_fasta(refs, cb_url):
     paths = []
     for (obj, ref) in zip(ws_objects['data'], refs):
         ws_type = obj['info'][2]
+        # This should be handled by AssemblyUtil, don't make the user do it
         if 'KBaseGenomes.Genome' in ws_type:
             assembly_ref = get_assembly_ref_from_genome(ref, obj)
         elif 'KBaseGenomeAnnotations.Assembly' in ws_type:
             assembly_ref = ref
         else:
             raise TypeError('Invalid type ' + ws_type + '. Must be an Assembly or Genome.')
+        # Sooo what happens if the path for two different assemblies is the same?
+        # AssemblyUtil seems to get a name from somewhere, and it's not a UUID or anything
+        # that's guaranteed to be unique
         path = assembly_util.get_assembly_as_fasta({'ref': assembly_ref})['path']
         paths.append(path)
     return paths

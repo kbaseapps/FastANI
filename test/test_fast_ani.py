@@ -23,8 +23,8 @@ class TestFastANI(unittest.TestCase):
         tmp_dir = tempfile.mkdtemp()
         out_paths = run_fast_ani_pairwise(tmp_dir, [path1, path2])
         self.assertEqual(set(out_paths), set([
-            os.path.join(tmp_dir, 'ecoli-shigella.out'),
-            os.path.join(tmp_dir, 'shigella-ecoli.out')
+            os.path.join(tmp_dir, 'ecoli.fna-shigella.fna.out'),
+            os.path.join(tmp_dir, 'shigella.fna-ecoli.fna.out')
         ]))
         result_data = get_result_data(out_paths)
         print('result_data:', result_data)
